@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 enum ThemeType { dark, light }
 
 class ThemeState extends ChangeNotifier {
-  bool _isDarkTheme = false;
+  bool _isDarkTheme = true;
   ThemeState() {
     getTheme().then((type) {
       _isDarkTheme = type == ThemeType.dark;
