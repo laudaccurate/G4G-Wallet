@@ -1,9 +1,11 @@
 // @dart=2.9
 
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:gfg_wallet/controllers/AuthController.dart';
 import 'package:gfg_wallet/provider/globals.dart';
+import 'package:gfg_wallet/screens/landing_page.dart';
 import 'package:gfg_wallet/utils/constants.dart';
 
 import 'package:provider/provider.dart';
@@ -320,7 +322,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return Scaffold(
       key: login,
-      backgroundColor: Colors.white,
+      backgroundColor: Constants.mainColor,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -341,7 +343,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: _screenHeight * 0.18,
                   width: _screenWidth * 0.36,
                   child: Image.asset(
-                    "assets/images/methodist_logo.png",
+                    "assets/images/logo.png",
                   ),
                 ),
               ),
@@ -368,11 +370,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       alignment: Alignment.center,
                       child: Container(
                         padding: const EdgeInsets.only(bottom: 20.0),
-                        child: const Text(
+                        child: Text(
                           'Login',
                           style: TextStyle(
                             fontSize: 22.0,
                             fontWeight: FontWeight.bold,
+                            color: Constants.mainColor,
                           ),
                         ),
                       ),
@@ -391,9 +394,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           Align(
                             alignment: Alignment.centerRight,
                             child: GestureDetector(
-                              child: const Text(
-                                'Forgot Credentials ?',
-                                style: TextStyle(fontSize: 14.0),
+                              child: Text(
+                                'Forgot Password ?',
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                  color: Constants.mainColor,
+                                ),
                               ),
                               onTap: () => showBottomSheet(context),
                             ),
@@ -404,12 +410,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Text(
+                              Text(
                                 "Don't have an account?  ",
                                 style: TextStyle(
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.w400,
-                                ),
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.grey[700]),
                               ),
                               GestureDetector(
                                 onTap: () => Navigator.push(
@@ -418,10 +424,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                     builder: (_) => Container(),
                                   ),
                                 ),
-                                child: const Text(
+                                child: Text(
                                   "Sign Up.",
                                   style: TextStyle(
-                                    color: Colors.purple,
+                                    color: Constants.mainColor,
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -586,23 +592,28 @@ class _LoginScreenState extends State<LoginScreen> {
             )
           : FlatButton(
               onPressed: () async {
-                print('trying to login');
-                if (validateId() == null &&
-                    memberIdController.text != '' &&
-                    validatePassword() == null &&
-                    passwordController.text != '') {
-                  AuthController.login(
+                Navigator.push(
                     context,
-                    {
-                      "memberId": memberIdController.text,
-                      "password": passwordController.text,
-                    },
-                    '',
-                    login,
-                  );
-                } else {
-                  print('invalid data');
-                }
+                    MaterialPageRoute(
+                      builder: ((context) => LandingPage()),
+                    ));
+                // print('trying to login');
+                // if (validateId() == null &&
+                //     memberIdController.text != '' &&
+                //     validatePassword() == null &&
+                //     passwordController.text != '') {
+                //   AuthController.login(
+                //     context,
+                //     {
+                //       "memberId": memberIdController.text,
+                //       "password": passwordController.text,
+                //     },
+                //     '',
+                //     login,
+                //   );
+                // } else {
+                //   print('invalid data');
+                // }
               },
               child: const Text(
                 'Login',
