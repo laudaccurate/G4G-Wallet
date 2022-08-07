@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gfg_wallet/provider/globals.dart';
 import 'package:gfg_wallet/provider/phoneDetails.dart';
-import 'package:gfg_wallet/screens/loginScreen.dart';
+import 'package:gfg_wallet/screens/Auth/loginScreen.dart';
 import 'package:gfg_wallet/services/localStorage.dart';
 import 'package:gfg_wallet/utils/constants.dart';
 import 'package:google_fonts/google_fonts.dart';

@@ -5,13 +5,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gfg_wallet/provider/globals.dart';
+import 'package:gfg_wallet/screens/Auth/createMerchant.dart';
 import 'package:gfg_wallet/screens/landing_page.dart';
 import 'package:gfg_wallet/utils/constants.dart';
 import 'package:gfg_wallet/utils/themes.dart';
 
 import 'package:provider/provider.dart';
 
-import '../utils/styles.dart';
+import '../../utils/styles.dart';
 
 class LoginScreen extends StatefulWidget {
   final String memberId;
@@ -404,7 +405,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                   color: Constants.mainColor,
                                 ),
                               ),
-                              onTap: () => showBottomSheet(context),
+                              onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: ((context) =>
+                                          CreateMerchantScreen()))),
+                              // onTap: () => showBottomSheet(context),
                             ),
                           ),
                           SizedBox(height: _screenHeight * 0.030),

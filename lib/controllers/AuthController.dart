@@ -90,7 +90,7 @@ class AuthController {
       bool checkinternet = await internetCheck();
       def.setLoading(true);
       if (checkinternet) {
-        var res = await AuthAPI.createConsumer(details, bio: bio);
+        var res = await AuthAPI.getBalance(details, bio: bio);
 
         user.setUser(res.data);
 

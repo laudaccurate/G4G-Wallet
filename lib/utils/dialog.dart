@@ -3,7 +3,7 @@
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:gfg_wallet/screens/loginScreen.dart';
+import 'package:gfg_wallet/screens/Auth/loginScreen.dart';
 import 'package:gfg_wallet/services/localStorage.dart';
 import 'package:gfg_wallet/services/serviceLocator.dart';
 import 'package:gfg_wallet/utils/constants.dart';
