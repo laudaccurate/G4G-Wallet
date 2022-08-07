@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:gfg_wallet/provider/globals.dart';
 import 'package:gfg_wallet/screens/landing_page.dart';
 import 'package:gfg_wallet/utils/constants.dart';
+import 'package:gfg_wallet/utils/themes.dart';
 
 import 'package:provider/provider.dart';
 
@@ -317,6 +318,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     _screenHeight = MediaQuery.of(context).size.height;
     _screenWidth = MediaQuery.of(context).size.width;
 
@@ -352,7 +354,7 @@ class _LoginScreenState extends State<LoginScreen> {
               height: _screenHeight * 0.55,
               width: _screenWidth,
               decoration: BoxDecoration(
-                color: Colors.grey[200],
+                color: themeProvider.themeData().backgroundColor,
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(35.0),
                   topRight: Radius.circular(35.0),
@@ -380,12 +382,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
+                    SizedBox(height: _screenHeight * 0.02),
                     Form(
                       child: Column(
                         children: [
                           nameField(
-                              'Member ID/Mobile Number',
-                              '098 2567',
+                              'Username',
+                              'Enter username',
                               CupertinoIcons.person_crop_circle_badge_checkmark,
                               memberIdController),
                           SizedBox(height: _screenHeight * 0.019),
@@ -407,34 +410,34 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(height: _screenHeight * 0.030),
                           submitButton(context),
                           SizedBox(height: _screenHeight * 0.02),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Don't have an account?  ",
-                                style: TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.grey[700]),
-                              ),
-                              GestureDetector(
-                                onTap: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => Container(),
-                                  ),
-                                ),
-                                child: Text(
-                                  "Sign Up.",
-                                  style: TextStyle(
-                                    color: Constants.mainColor,
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.center,
+                          //   children: [
+                          //     Text(
+                          //       "Don't have an account?  ",
+                          //       style: TextStyle(
+                          //           fontSize: 14.0,
+                          //           fontWeight: FontWeight.w400,
+                          //           color: Colors.grey[700]),
+                          //     ),
+                          //     GestureDetector(
+                          //       onTap: () => Navigator.push(
+                          //         context,
+                          //         MaterialPageRoute(
+                          //           builder: (_) => Container(),
+                          //         ),
+                          //       ),
+                          //       child: Text(
+                          //         "Sign Up.",
+                          //         style: TextStyle(
+                          //           color: Constants.mainColor,
+                          //           fontSize: 14.0,
+                          //           fontWeight: FontWeight.w600,
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
                         ],
                       ),
                     ),
@@ -457,7 +460,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Text(
             '  $name',
             style: TextStyle(
-              color: Colors.grey[700],
+              color: Colors.grey[400],
               fontSize: 13.5,
             ),
           ),
@@ -468,8 +471,8 @@ class _LoginScreenState extends State<LoginScreen> {
         Container(
           padding: const EdgeInsets.only(
               left: 18.0, right: 6.0, top: 1.0, bottom: 1.0),
-          decoration: const BoxDecoration(
-            color: Colors.white,
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.2),
             borderRadius: BorderRadius.all(
               Radius.circular(8.0),
             ),
@@ -507,7 +510,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Text(
             '  Password',
             style: TextStyle(
-              color: Colors.grey[700],
+              color: Colors.grey[400],
               fontSize: 14.0,
             ),
           ),
@@ -518,8 +521,8 @@ class _LoginScreenState extends State<LoginScreen> {
         Container(
           padding: const EdgeInsets.only(
               left: 16.0, right: 6.0, top: 1.0, bottom: 1.0),
-          decoration: const BoxDecoration(
-            color: Colors.white,
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.2),
             borderRadius: BorderRadius.all(
               Radius.circular(8.0),
             ),
