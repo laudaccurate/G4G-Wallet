@@ -8,7 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gfg_wallet/provider/globals.dart';
 import 'package:gfg_wallet/provider/phoneDetails.dart';
-import 'package:gfg_wallet/screens/Auth/loginScreen.dart';
+import 'package:gfg_wallet/screens/Auth/createConsumer.dart';
+import 'package:gfg_wallet/screens/Auth/createMerchant.dart';
 import 'package:gfg_wallet/services/localStorage.dart';
 import 'package:gfg_wallet/utils/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -120,14 +121,14 @@ class SplashScreenState extends State<SplashScreen>
       phoneInfo.setLat(latitude);
       phoneInfo.setLng(longitude);
       // print(token);
-      Future.delayed(Duration(seconds: 3), () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => LoginScreen(),
-          ),
-        );
-      });
+      // Future.delayed(Duration(seconds: 3), () {
+      //   Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //       builder: (context) => LoginScreen(),
+      //     ),
+      //   );
+      // });
     } catch (e) {
       print(e);
       if (mounted) {
@@ -208,7 +209,7 @@ class SplashScreenState extends State<SplashScreen>
         ),
         child: Container(
           height: size.height,
-          color: Constants.mainColor.withOpacity(0.85),
+          color: Colors.black.withOpacity(0.65),
           child: Stack(
             fit: StackFit.expand,
             children: <Widget>[
@@ -245,11 +246,108 @@ class SplashScreenState extends State<SplashScreen>
                       animatedTexts: [
                         TypewriterAnimatedText(Constants.appName,
                             speed: Duration(milliseconds: 100)),
+                        TypewriterAnimatedText("Your all-in-one mobile wallet",
+                            speed: Duration(milliseconds: 100)),
                       ],
                     ),
                   ),
-                  SizedBox(height: size.height * 0.08),
+                  SizedBox(height: size.height * 0.2),
 
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      InkWell(
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: ((context) => CreateConsumerScreen()),
+                          ),
+                        ),
+                        child: Container(
+                          height: size.height * 0.1,
+                          width: size.width * 0.4,
+                          padding: EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.6),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Icon(
+                                      Icons.person,
+                                      // color: Colors.blue,
+                                      size: 30,
+                                    ),
+                                    SizedBox(width: 5),
+                                    Icon(
+                                      Icons.login_rounded,
+                                      // color: Colors.blue,
+                                    ),
+                                  ],
+                                ),
+                                Text(
+                                  'Customer',
+                                  style: GoogleFonts.lato(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                  ),
+                                )
+                              ]),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: ((context) => CreateMerchantScreen()),
+                          ),
+                        ),
+                        child: Container(
+                          height: size.height * 0.1,
+                          width: size.width * 0.4,
+                          padding: EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Constants.mainColor.withOpacity(0.7),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Icon(
+                                      Icons.store_mall_directory_rounded,
+                                      // color: Colors.green,
+                                      size: 30,
+                                    ),
+                                    SizedBox(width: 5),
+                                    Icon(
+                                      Icons.login_rounded,
+                                      // color: Colors.green,
+                                    ),
+                                  ],
+                                ),
+                                Text(
+                                  'Merchant',
+                                  style: GoogleFonts.lato(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                  ),
+                                )
+                              ]),
+                        ),
+                      )
+                    ],
+                  ),
                   // Align(
                   //     alignment: Alignment.bottomCenter,
                   //     child: error

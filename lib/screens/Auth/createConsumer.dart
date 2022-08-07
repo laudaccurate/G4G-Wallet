@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gfg_wallet/provider/globals.dart';
+import 'package:gfg_wallet/screens/Auth/loginScreen.dart';
 import 'package:gfg_wallet/screens/landing_page.dart';
 import 'package:gfg_wallet/utils/constants.dart';
 import 'package:gfg_wallet/utils/themes.dart';
@@ -320,22 +321,42 @@ class _CreateConsumerScreenState extends State<CreateConsumerScreen> {
             SizedBox(
               height: _screenHeight * 0.2,
               child: Center(
-                child: Container(
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(70.0)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color.fromRGBO(143, 148, 158, .3),
-                        blurRadius: 20.0,
-                        offset: Offset(0, 10),
-                      )
-                    ],
-                  ),
-                  height: _screenHeight * 0.1,
-                  width: _screenWidth * 0.22,
-                  child: Image.asset(
-                    "assets/images/logo.png",
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      onPressed: () => Navigator.pop(context),
+                      icon: Icon(Icons.arrow_back_ios_new_rounded),
+                      iconSize: 32,
+                      color: Colors.black,
+                    ),
+                    Container(
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(70.0)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color.fromRGBO(143, 148, 158, .3),
+                            blurRadius: 20.0,
+                            offset: Offset(0, 10),
+                          )
+                        ],
+                      ),
+                      height: _screenHeight * 0.1,
+                      width: _screenWidth * 0.22,
+                      child: Image.asset(
+                        "assets/images/logo.png",
+                      ),
+                    ),
+                    Opacity(
+                      opacity: 0,
+                      child: IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: Icon(Icons.arrow_back_ios_new_rounded),
+                        iconSize: 32,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -403,37 +424,36 @@ class _CreateConsumerScreenState extends State<CreateConsumerScreen> {
                           SizedBox(height: _screenHeight * 0.019),
                           passwordField(),
                           SizedBox(height: _screenHeight * 0.04),
-
                           submitButton(context),
                           SizedBox(height: _screenHeight * 0.02),
-                          // Row(
-                          //   mainAxisAlignment: MainAxisAlignment.center,
-                          //   children: [
-                          //     Text(
-                          //       "Don't have an account?  ",
-                          //       style: TextStyle(
-                          //           fontSize: 14.0,
-                          //           fontWeight: FontWeight.w400,
-                          //           color: Colors.grey[700]),
-                          //     ),
-                          //     GestureDetector(
-                          //       onTap: () => Navigator.push(
-                          //         context,
-                          //         MaterialPageRoute(
-                          //           builder: (_) => Container(),
-                          //         ),
-                          //       ),
-                          //       child: Text(
-                          //         "Sign Up.",
-                          //         style: TextStyle(
-                          //           color: Constants.mainColor,
-                          //           fontSize: 14.0,
-                          //           fontWeight: FontWeight.w600,
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   ],
-                          // ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Have an account?  ",
+                                style: TextStyle(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.grey[700]),
+                              ),
+                              GestureDetector(
+                                onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => LoginScreen(),
+                                  ),
+                                ),
+                                child: Text(
+                                  "Login.",
+                                  style: TextStyle(
+                                    color: Constants.mainColor,
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
@@ -616,7 +636,7 @@ class _CreateConsumerScreenState extends State<CreateConsumerScreen> {
                 // }
               },
               child: const Text(
-                'Create Merchant',
+                'Create Account',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 18.0,
