@@ -188,7 +188,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                         child: ListTile(
                           leading: const CircleAvatar(
                             backgroundImage:
-                                AssetImage('assets/images/slcb.png'),
+                                AssetImage('assets/images/logo.png'),
                           ),
                           title: Text(widget.account.accountType),
                           subtitle: Text(widget.account.accountNumber),

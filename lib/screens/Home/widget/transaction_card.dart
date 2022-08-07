@@ -75,13 +75,11 @@ class TransactionCard extends StatelessWidget {
           ),
         ),
         Text(
-          visible
-              ? "${Constants.currency} ${Utilities.formatAmounts(data.amount)}"
-              : "********",
+          "${Constants.currency} ${Utilities.formatAmounts(data.amount)}",
           style: GoogleFonts.comfortaa(
             fontSize: 14,
             color: double.parse(data.amount) < 0
-                ? Constants.mainColor
+                ? Colors.red
                 : Colors.green.shade600,
           ),
         ),
@@ -97,7 +95,7 @@ _transactions(int type) {
       return const Icon(CupertinoIcons.rocket, color: Colors.teal);
 
     case 1:
-      return const Icon(CupertinoIcons.ant, color: Colors.red);
+      return const Icon(CupertinoIcons.creditcard, color: Colors.red);
 
     case 2:
       return const Icon(CupertinoIcons.chart_bar, color: Colors.amber);
