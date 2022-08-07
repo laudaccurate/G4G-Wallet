@@ -30,8 +30,11 @@ class _CreateMerchantScreenState extends State<CreateMerchantScreen> {
   TextEditingController userNameController = TextEditingController();
   TextEditingController accountController = TextEditingController();
   TextEditingController tinController = TextEditingController();
+  TextEditingController referenceController = TextEditingController();
+  TextEditingController bvnController = TextEditingController();
   TextEditingController cityController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
   String memberId = '';
   String password = '';
 
@@ -415,6 +418,20 @@ class _CreateMerchantScreenState extends State<CreateMerchantScreen> {
                               tinController, TextInputType.number),
                           SizedBox(height: _screenHeight * 0.019),
                           nameField(
+                              'Reference Number',
+                              'Enter reference number',
+                              Icons.recent_actors,
+                              referenceController,
+                              TextInputType.number),
+                          SizedBox(height: _screenHeight * 0.019),
+                          nameField(
+                              'Director BVN',
+                              'Enter BVN',
+                              Icons.recent_actors,
+                              bvnController,
+                              TextInputType.number),
+                          SizedBox(height: _screenHeight * 0.019),
+                          nameField(
                             'City / State',
                             'Enter City',
                             Icons.location_city_outlined,
@@ -422,7 +439,10 @@ class _CreateMerchantScreenState extends State<CreateMerchantScreen> {
                             TextInputType.text,
                           ),
                           SizedBox(height: _screenHeight * 0.019),
-                          passwordField(),
+                          passwordField(passwordController, 'Password'),
+                          SizedBox(height: _screenHeight * 0.019),
+                          passwordField(
+                              confirmPasswordController, 'Confirm Password'),
                           SizedBox(height: _screenHeight * 0.04),
                           submitButton(context),
                           SizedBox(height: _screenHeight * 0.02),
@@ -519,13 +539,13 @@ class _CreateMerchantScreenState extends State<CreateMerchantScreen> {
     );
   }
 
-  Widget passwordField() {
+  Widget passwordField(TextEditingController controller, String label) {
     return Column(
       children: [
         Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            '  Password',
+            '  $label',
             style: TextStyle(
               color: Colors.grey[400],
               fontSize: 14.0,
@@ -547,7 +567,7 @@ class _CreateMerchantScreenState extends State<CreateMerchantScreen> {
           child: TextField(
             obscureText: hidePassword,
             keyboardType: TextInputType.emailAddress,
-            controller: passwordController,
+            controller: controller,
             onChanged: (value) {
               if (value != '') {
                 setState(() {
@@ -560,7 +580,7 @@ class _CreateMerchantScreenState extends State<CreateMerchantScreen> {
             },
             decoration: InputDecoration(
               border: InputBorder.none,
-              hintText: "Password",
+              hintText: label,
               hintStyle: TextStyle(color: Colors.grey[400]),
               errorText: validatePassword(),
               suffixIcon: passwordActive
@@ -620,9 +640,9 @@ class _CreateMerchantScreenState extends State<CreateMerchantScreen> {
                     {
                       "channel_code": "APISNG",
                       "customer_tier": "2",
-                      "reference": "NXG34567898FGHJJB8",
+                      "reference": referenceController.text,
                       "account_no": accountController.text,
-                      "director_bvn": "22334744900",
+                      "director_bvn": bvnController.text,
                       "tin": tinController.text,
                       "user_name": userNameController.text,
                       "city": cityController.text,

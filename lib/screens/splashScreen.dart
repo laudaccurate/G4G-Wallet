@@ -10,6 +10,7 @@ import 'package:gfg_wallet/provider/globals.dart';
 import 'package:gfg_wallet/provider/phoneDetails.dart';
 import 'package:gfg_wallet/screens/Auth/createConsumer.dart';
 import 'package:gfg_wallet/screens/Auth/createMerchant.dart';
+import 'package:gfg_wallet/screens/Auth/loginScreen.dart';
 import 'package:gfg_wallet/services/localStorage.dart';
 import 'package:gfg_wallet/utils/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -251,7 +252,7 @@ class SplashScreenState extends State<SplashScreen>
                       ],
                     ),
                   ),
-                  SizedBox(height: size.height * 0.2),
+                  SizedBox(height: size.height * 0.14),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -346,6 +347,45 @@ class SplashScreenState extends State<SplashScreen>
                               ]),
                         ),
                       )
+                    ],
+                  ),
+                  SizedBox(height: size.height * 0.08),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Have an account?  ",
+                        style: TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.grey[300]),
+                      ),
+                      GestureDetector(
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => LoginScreen(),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Text(
+                              "Login",
+                              style: TextStyle(
+                                color: Constants.mainColor,
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(width: 6),
+                            Icon(
+                              Icons.login_rounded,
+                              color: Constants.mainColor,
+                              // color: Colors.green,
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                   // Align(
