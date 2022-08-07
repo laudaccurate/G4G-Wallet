@@ -9,6 +9,7 @@ import 'package:fluttercontactpicker/fluttercontactpicker.dart';
 import 'package:gfg_wallet/models.dart/accountModels.dart';
 import 'package:gfg_wallet/utils/themes.dart';
 import 'package:gfg_wallet/widgets/appBar.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -80,11 +81,11 @@ class Utilities {
         cardNo.substring(cardNo.length - 4);
 
     StringBuffer formattedCardNumber = StringBuffer();
-    for (int i = 0; i < cardNo.length; i++) {
+    for (int i = 0; i < _cardNo.length; i++) {
       if (i % 4 == 0 && i != 0) {
         formattedCardNumber.write(" ");
       }
-      formattedCardNumber.write(cardNo[i]);
+      formattedCardNumber.write(_cardNo[i]);
     }
 
     return formattedCardNumber.toString();
@@ -154,7 +155,11 @@ class Utilities {
   }
 
   static openContainer(
-      {BuildContext context, Widget child, Widget display, String label}) {
+      {BuildContext context,
+      Widget child,
+      Color color,
+      Widget display,
+      String label}) {
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
     return OpenContainer(
       closedElevation: 10,
@@ -167,16 +172,28 @@ class Utilities {
       // openColor: Colors.white,
       // closedColor: Colors.white,
       closedBuilder: (context, openBuilder) {
-        return Container(
-          padding: const EdgeInsets.all(10),
-          width: MediaQuery.of(context).size.width * 0.26,
-          // margin: const EdgeInsets.only(top: 20, right: 15),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            boxShadow: themeProvider.themeMode().shadow,
-            color: themeProvider.themeData().backgroundColor,
-          ),
-          child: child,
+        return Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              width: MediaQuery.of(context).size.width * 0.16,
+              // margin: const EdgeInsets.only(top: 20, right: 15),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                boxShadow: themeProvider.themeMode().shadow,
+                color: color,
+              ),
+              child: child,
+            ),
+            SizedBox(height: 7),
+            Text(
+              label,
+              style: GoogleFonts.lato(
+                fontSize: 11,
+                color: themeProvider.themeMode().textColor,
+              ),
+            )
+          ],
         );
       },
       openBuilder: (context, closeBuilder) {
