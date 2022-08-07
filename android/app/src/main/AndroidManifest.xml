@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.gfg_wallet">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="G4G Wallet"
         android:name="${applicationName}"

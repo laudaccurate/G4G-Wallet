@@ -34,7 +34,7 @@ class Constants {
   //usg public url
   // static String url = "http://197.251.247.203:9096/";
   // static String url = "https://union.ngrok.io/ibank/api/v1.0/";
-  static String url = "http://192.168.1.225:8680/ibank/api/v1.0/";
+  static String url = "https://rgw.k8s.apis.ng/centric-platforms/uat";
 
   // static String url = "http://192.168.1.95:9096/ibank/api/v1.0/";
   // static String documentUrl = "http://10.93.101.144:9096/";
@@ -43,6 +43,8 @@ class Constants {
   // static String url = "http://192.168.1.225:8680/ibank/api/v1.0/";
   static final dynamic header = {
     "content-Type": "application/json",
+    "accept": "application/json",
+    "ClientId": ""
   };
 
   static final dynamic apiHeaders = {

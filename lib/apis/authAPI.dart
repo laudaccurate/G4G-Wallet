@@ -3,16 +3,12 @@
 // ignore_for_file: file_names
 
 import 'dart:developer';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gfg_wallet/models.dart/loginModel.dart';
-import 'package:gfg_wallet/provider/phoneDetails.dart';
 import 'package:gfg_wallet/utils/constants.dart';
 import 'package:http/http.dart' as http;
 
 import 'dart:convert';
-
-import 'package:provider/provider.dart';
 
 class AuthAPI {
 // LOGIN
@@ -67,17 +63,26 @@ class AuthAPI {
     }
   }
 
-// FIRST TIME LOGIN
-  static Future<String> passwordSetup(details) async {
+  static Future<LoginModel> getBalance(Map<String, dynamic> details,
+      {String bio}) async {
     //print("API called");
-    final url = "${Constants.url}user/initialPasswordSetup";
+    String url = "${Constants.url}/GetBalance";
+
     print(url);
 
-    //print(details);
+    details.forEach((key, value) => print("$key = $value"));
     final response = await http.post(
       Uri.parse(url),
       headers: Constants.header,
-      body: jsonEncode(details),
+      body: jsonEncode({
+        {
+          "user_email": "test_user+access@bitt.com",
+          "user_token":
+              "eyJhbGciOiJSUI1NiIsInR5cCI6IkpXVCJ9.eyJhbGlhcyI6IkB0YWNoLjAxZiIsImV4cGlyeSI6IjIwMjEtMDktMjdUMTM6MjU6NDMuMDg2NDMxWiIsImlzcyI6ImdvbmRvciBjb21tZXJjZSIsIm9yZyI6ImNmYiIsInRva2VuX3R5cGUiOiJhY2Nlc3MiLCJ1c2VyaWQiOiIwMUZFUERXS1BHVjkxVzRCRE45MTczTjBWRyJ9.zMIxdoqkxY3MFnY7zRUeQdA88SrXD-KcukT2fePc3a4IMhtuAuBcNjSnVQ9J4AUNAz2BQGnhvjsJiOJGcV4M6w1n1tFJMr6xnDTChb2OZa2eSi6u3qjppOKXgQ_t0EOPpTC9Iqx3zgRt0C6Nl1z14ixmGmaAY0SKKgjHSI1ieiuRtzJuJi7qq7nHf_u4iypr4mMN1H6KCrIq86xEPp2bN2H3cEHQr2AaSjLamoPkT_oA0RHoNroZvTqmpZE80hvYHBSECUagiAazlb_ANMJgNF0zo_uSSMkyXHpASwqdaZnPLgINzLkIJrfNLwDf4P1VEh9VoaB1E9ElQanZVBrN51VDhBitTzGolSxk0_P37aVPrS9yeWceJTHs1GojMOGCosYRu_wi05n0bsG_iAEFRFxlV3pT-2YdS5YAbUdEJj65NO-6SkmPQBcMGCwHCztDn6h6lQZiUPgjnTqsSUq_kUC_X3ki4I7fVohm-Z9jplLOPHHk88CmlJnUI0AgYYfJQw8Kwi5010-1eTz6EFVI7_fjeV_OPI-emxJ4F1QaUy934XC69kWPDgfeLtBfYmee3M3N6MaD6eurltD23YknDhg-VWcBD_BycmUKMIQ5hXHL-0ix_e97zr1kw7UjcwdNwlCC6m9AkrEhevzvG4nQ3ZIVRhb_fklXykYITjulUmQ",
+          "user_type": "USER",
+          "channel_code": "APISNG"
+        }
+      }),
     );
 
     print("======");
@@ -88,11 +93,16 @@ class AuthAPI {
       Map<String, dynamic> result = json.decode(response.body);
 
       if (result["responseCode"] == "000") {
-        return result["message"].toString();
+        LoginModel responds = LoginModel.fromJson(json.decode(response.body));
+        log(response.body);
+        //print("____user");
+        //print(responds.data.accountsList[0].localEquivalentAvailableBalance);
+        //print(responds.data.accountsList[0].accountNumber);
+        return responds;
       } else {
         throw PlatformException(
           code: result["responseCode"].toString(),
-          message: result["message"].toString(),
+          message: result["message"],
         );
       }
       // return responds;
@@ -106,32 +116,46 @@ class AuthAPI {
     }
   }
 
-// FIRST TIME LOGIN
-  static Future<dynamic> validateKYC(custNo) async {
-    // final url = "${Constants.url}user/validateKyc/000146";
-    final url = "${Constants.url}user/validateKyc/$custNo";
-    //print(url);
+  static Future<LoginModel> createConsumer(Map<String, dynamic> details,
+      {String bio}) async {
+    //print("API called");
+    String url = "${Constants.url}/CreateConsumer";
 
-    final response = await http.get(
+    print(url);
+
+    details.forEach((key, value) => print("$key = $value"));
+    final response = await http.post(
       Uri.parse(url),
       headers: Constants.header,
+      body: jsonEncode({
+        "channel_code": "APISNG",
+        "customer_tier": "2",
+        "reference": "NXG34567898FGHJJB1",
+        "account_no": "0689658501",
+        "bvn": "22152793496",
+        "password": "Password10",
+        "nin": ""
+      }),
     );
 
-    //print("======");
-    //print(response.body);
-    //print("======");
+    print("======");
+    print(response.body);
+    print("======");
 
     if (response.statusCode == 200) {
       Map<String, dynamic> result = json.decode(response.body);
 
       if (result["responseCode"] == "000") {
-        return result["data"];
-      } else if (result["responseCode"] == "999") {
-        return result["data"];
+        LoginModel responds = LoginModel.fromJson(json.decode(response.body));
+        log(response.body);
+        //print("____user");
+        //print(responds.data.accountsList[0].localEquivalentAvailableBalance);
+        //print(responds.data.accountsList[0].accountNumber);
+        return responds;
       } else {
         throw PlatformException(
           code: result["responseCode"].toString(),
-          message: result["message"].toString(),
+          message: result["message"],
         );
       }
       // return responds;
@@ -145,27 +169,48 @@ class AuthAPI {
     }
   }
 
-  static Future<bool> pinSetup(details) async {
+  static Future<LoginModel> createMerchant(Map<String, dynamic> details,
+      {String bio}) async {
     //print("API called");
-    final url = "${Constants.url}user/pinSetup";
-    //print(url);
+    String url = "${Constants.url}/CreateMerchant";
 
-    //print(details);
+    print(url);
+
+    details.forEach((key, value) => print("$key = $value"));
     final response = await http.post(
       Uri.parse(url),
       headers: Constants.header,
-      body: jsonEncode(details),
+      body: jsonEncode({
+        {
+          "channel_code": "APISNG",
+          "customer_tier": "2",
+          "reference": "NXG34567898FGHJJB8",
+          "account_no": "0068626654",
+          "director_bvn": "22334744900",
+          "tin": "00000015-0001",
+          "user_name": "accessbank",
+          "city": "Lagos",
+          "state": "Lagos",
+          "wallet_category": "parent",
+          "password": "Password10"
+        }
+      }),
     );
 
-    //print("======");
-    //print(response.body);
-    //print("======");
+    print("======");
+    print(response.body);
+    print("======");
 
     if (response.statusCode == 200) {
       Map<String, dynamic> result = json.decode(response.body);
 
       if (result["responseCode"] == "000") {
-        return true;
+        LoginModel responds = LoginModel.fromJson(json.decode(response.body));
+        log(response.body);
+        //print("____user");
+        //print(responds.data.accountsList[0].localEquivalentAvailableBalance);
+        //print(responds.data.accountsList[0].accountNumber);
+        return responds;
       } else {
         throw PlatformException(
           code: result["responseCode"].toString(),
@@ -178,48 +223,53 @@ class AuthAPI {
       //print(response.statusCode);
       throw PlatformException(
         code: response.statusCode.toString(),
-        message: 'An error occurred. Please try again',
+        message: "Error connecting to server",
       );
     }
   }
 
-// SELF ENROLL
-
-  static Future<String> instantRegistration(
-      BuildContext context, String customerNumber) async {
-    final deviceInfo = Provider.of<PhoneInfo>(context, listen: false);
+  static Future<LoginModel> payFromWallet(Map<String, dynamic> details,
+      {String bio}) async {
     //print("API called");
-    final url = "${Constants.url}user/instantRegistration";
-    //print(url);
+    String url = "${Constants.url}/CreateMerchant";
 
-    Map<String, dynamic> body = {
-      "appVersion": deviceInfo.getappVersion,
-      "country": deviceInfo.getcountry,
-      "customerNumber": customerNumber,
-      "deviceBrand": deviceInfo.getbrand,
-      "deviceId": deviceInfo.getdeviceId,
-      "deviceIp": deviceInfo.getdeviceIp,
-      "deviceManufacturer": deviceInfo.getManufacturer,
-      "deviceModel": deviceInfo.getmodel,
-      "deviceOs": deviceInfo.getdeviceOs
-    };
+    print(url);
 
-    //print(jsonEncode(body));
+    details.forEach((key, value) => print("$key = $value"));
     final response = await http.post(
       Uri.parse(url),
       headers: Constants.header,
-      body: jsonEncode(body),
+      body: jsonEncode({
+        {
+          "channel_code": "APISNG",
+          "customer_tier": "2",
+          "reference": "NXG34567898FGHJJB8",
+          "account_no": "0068626654",
+          "director_bvn": "22334744900",
+          "tin": "00000015-0001",
+          "user_name": "accessbank",
+          "city": "Lagos",
+          "state": "Lagos",
+          "wallet_category": "parent",
+          "password": "Password10"
+        }
+      }),
     );
 
-    //print("======");
-    //print(response.body);
-    //print("======");
+    print("======");
+    print(response.body);
+    print("======");
 
     if (response.statusCode == 200) {
       Map<String, dynamic> result = json.decode(response.body);
 
       if (result["responseCode"] == "000") {
-        return result["message"];
+        LoginModel responds = LoginModel.fromJson(json.decode(response.body));
+        log(response.body);
+        //print("____user");
+        //print(responds.data.accountsList[0].localEquivalentAvailableBalance);
+        //print(responds.data.accountsList[0].accountNumber);
+        return responds;
       } else {
         throw PlatformException(
           code: result["responseCode"].toString(),
@@ -232,234 +282,7 @@ class AuthAPI {
       //print(response.statusCode);
       throw PlatformException(
         code: response.statusCode.toString(),
-        message: 'An error occurred. Please try again',
-      );
-    }
-  }
-
-  static Future<Map<String, dynamic>> validateCustomer(details) async {
-    // details.forEach((key, value) => //print('$key: $value'));
-
-    //print("API called");
-    //print(details);
-    final url = "${Constants.url}user/validateCustomer";
-    //print(url);
-
-    final response = await http.post(
-      Uri.parse(url),
-      headers: Constants.header,
-      body: jsonEncode(details),
-    );
-
-    //print(response.body);
-    if (response.statusCode == 200) {
-      Map<String, dynamic> result = json.decode(response.body.toString());
-      if (result["responseCode"] == '000') {
-        return result["data"];
-      } else {
-        throw PlatformException(
-          code: 'CUST_VALIDATION_ERROR',
-          message: result['message'],
-        );
-      }
-    } else {
-      throw PlatformException(
-        code: response.statusCode.toString(),
-        message: 'An error occurred. Please try again',
-      );
-    }
-  }
-
-  static Future<String> confirmCustomerDetails(
-      Map<String, String> details) async {
-    //print("API called");
-    final url = "${Constants.url}user/confirmCustomer";
-    //print(url);
-
-    final response = await http.post(
-      Uri.parse(url),
-      headers: Constants.header,
-      body: jsonEncode(details),
-    );
-
-    //print(response.body.toString());
-    if (response.statusCode == 200) {
-      Map<String, dynamic> result = json.decode(response.body.toString());
-      if (result['responseCode'] == '000') {
-        return result['message'];
-      } else {
-        throw PlatformException(
-          code: 'CUSTOMER_CONFIRMATION_ERROR',
-          message: result['message'],
-        );
-      }
-    } else {
-      throw PlatformException(
-        code: response.statusCode.toString(),
-        message: 'An error occurred. Please try again',
-      );
-    }
-  }
-
-  static Future<String> registerCustomer(Map<String, String> details) async {
-    //print("API called");
-    final url = "${Constants.url}user/registerCustomer";
-    //print(url);
-
-    final response = await http.post(
-      Uri.parse(url),
-      headers: Constants.header,
-      body: jsonEncode(details),
-    );
-
-    //print(response.body.toString());
-    if (response.statusCode == 200) {
-      Map<String, dynamic> result = json.decode(response.body.toString());
-      if (result['responseCode'] == '000') {
-        return result['message'];
-      } else {
-        throw PlatformException(
-          code: 'CUSTOMER_REGISTRATION_ERROR',
-          message: result['message'],
-        );
-      }
-    } else {
-      throw PlatformException(
-        code: response.statusCode.toString(),
-        message: 'An error occurred. Please try again',
-      );
-    }
-  }
-
-  // SETTINGS
-  static Future<String> changePassword(Map<String, String> details) async {
-    //print("API called");
-    final url = "${Constants.url}user/changePassword";
-    //print(url);
-
-    final response = await http.post(
-      Uri.parse(url),
-      headers: Constants.header,
-      body: jsonEncode(details),
-    );
-
-    if (response.statusCode == 200) {
-      //print(response.body.toString());
-
-      Map<String, dynamic> result = json.decode(response.body.toString());
-      if (result["responseCode"] == '000') {
-        //print('PASSWORD CHANGE SUCCESS');
-        return result["message"];
-      } else {
-        //print('not done');
-        throw PlatformException(
-          code: 'PASSWORD_CHANGE_ERROR',
-          message: result["message"],
-        );
-      }
-    } else {
-      throw PlatformException(
-        code: response.statusCode.toString(),
-        message: 'An error occurred. Please try again',
-      );
-    }
-  }
-
-  static Future<String> changePin(Map<String, String> details) async {
-    //print("API called");
-    final url = "${Constants.url}user/changePin";
-    //print(url);
-
-    final response = await http.post(
-      Uri.parse(url),
-      headers: Constants.header,
-      body: jsonEncode(details),
-    );
-
-    if (response.statusCode == 200) {
-      //print(response.body.toString());
-
-      Map<String, dynamic> result = json.decode(response.body.toString());
-      if (result["responseCode"] == '000') {
-        //print('PIN CHANGE SUCCESS');
-        return result["message"];
-      } else {
-        //print('not done');
-        throw PlatformException(
-          code: 'PIN_CHANGE_ERROR',
-          message: result["message"],
-        );
-      }
-    } else {
-      throw PlatformException(
-        code: response.statusCode.toString(),
-        message: 'An error occurred. Please try again',
-      );
-    }
-  }
-
-  static Future<String> forgotPin(Map<String, String> details) async {
-    //print("API called");
-    final url = "${Constants.url}user/forgotPin";
-    //print(url);
-
-    final response = await http.post(
-      Uri.parse(url),
-      headers: Constants.header,
-      body: jsonEncode(details),
-    );
-
-    if (response.statusCode == 200) {
-      //print(response.body.toString());
-
-      Map<String, dynamic> result = json.decode(response.body.toString());
-      if (result["responseCode"] == '000') {
-        //print('PIN RESET SUCCESS');
-        return result["message"];
-      } else {
-        //print('not done');
-        throw PlatformException(
-          code: 'PIN_RESET_ERROR',
-          message: result["message"],
-        );
-      }
-    } else {
-      throw PlatformException(
-        code: response.statusCode.toString(),
-        message: 'An error occurred. Please try again',
-      );
-    }
-  }
-
-  static Future<String> forgotPassword(Map<String, String> details) async {
-    //print("API called");
-    final url = "${Constants.url}user/forgotPassword";
-    //print(url);
-
-    final response = await http.post(
-      Uri.parse(url),
-      headers: Constants.header,
-      body: jsonEncode(details),
-    );
-
-    if (response.statusCode == 200) {
-      //print(response.body.toString());
-
-      Map<String, dynamic> result = json.decode(response.body.toString());
-      if (result["responseCode"] == '000') {
-        //print('PASSWORD RESET SUCCESS');
-        return result["message"];
-      } else {
-        //print('not done');
-        throw PlatformException(
-          code: 'PASSWORD_RESET_ERROR',
-          message: result["message"],
-        );
-      }
-    } else {
-      throw PlatformException(
-        code: response.statusCode.toString(),
-        message: 'An error occurred. Please try again',
+        message: "Error connecting to server",
       );
     }
   }
