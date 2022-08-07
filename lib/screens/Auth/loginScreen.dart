@@ -4,8 +4,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:gfg_wallet/controllers/AuthController.dart';
 import 'package:gfg_wallet/provider/globals.dart';
-import 'package:gfg_wallet/screens/Auth/createMerchant.dart';
 import 'package:gfg_wallet/screens/landing_page.dart';
 import 'package:gfg_wallet/utils/constants.dart';
 import 'package:gfg_wallet/utils/themes.dart';
@@ -27,17 +27,17 @@ class _LoginScreenState extends State<LoginScreen> {
   bool hidePassword = true;
   final login = GlobalKey<ScaffoldState>();
 
-  TextEditingController memberIdController;
+  TextEditingController usernameController = TextEditingController();
 
   @override
   void initState() {
     if (widget.memberId != null) {
-      memberIdController = TextEditingController(text: widget.memberId);
+      usernameController = TextEditingController(text: widget.memberId);
       setState(() {
-        memberId = memberIdController.text;
+        memberId = usernameController.text;
       });
     } else {
-      memberIdController = TextEditingController();
+      usernameController = TextEditingController();
     }
     super.initState();
   }
@@ -47,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String password = '';
 
   String validateId() {
-    if (memberIdController.text != '') {
+    if (usernameController.text != '') {
       return null;
     } else {
       return null;
@@ -391,7 +391,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               'Username',
                               'Enter username',
                               CupertinoIcons.person_crop_circle_badge_checkmark,
-                              memberIdController),
+                              usernameController),
                           SizedBox(height: _screenHeight * 0.019),
                           passwordField(),
                           SizedBox(height: _screenHeight * 0.014),
@@ -406,10 +406,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                               onTap: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: ((context) =>
-                                          CreateMerchantScreen()))),
+                                context,
+                                MaterialPageRoute(
+                                  builder: ((context) => LandingPage()),
+                                ),
+                              ),
                               // onTap: () => showBottomSheet(context),
                             ),
                           ),
@@ -601,28 +602,24 @@ class _LoginScreenState extends State<LoginScreen> {
             )
           : FlatButton(
               onPressed: () async {
-                Navigator.push(
+                print('trying to login');
+                if (validateId() == null &&
+                    usernameController.text != '' &&
+                    validatePassword() == null &&
+                    passwordController.text != '') {
+                  AuthController.login(
                     context,
-                    MaterialPageRoute(
-                      builder: ((context) => LandingPage()),
-                    ));
-                // print('trying to login');
-                // if (validateId() == null &&
-                //     memberIdController.text != '' &&
-                //     validatePassword() == null &&
-                //     passwordController.text != '') {
-                //   AuthController.login(
-                //     context,
-                //     {
-                //       "memberId": memberIdController.text,
-                //       "password": passwordController.text,
-                //     },
-                //     '',
-                //     login,
-                //   );
-                // } else {
-                //   print('invalid data');
-                // }
+                    {
+                      "user_id": usernameController.text,
+                      "password": passwordController.text,
+                      "allow_tokenization": "Y",
+                      "user_type": "USER",
+                      "channel_code": "APISNG"
+                    },
+                  );
+                } else {
+                  print('invalid data');
+                }
               },
               child: const Text(
                 'Login',

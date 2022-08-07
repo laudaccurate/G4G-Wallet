@@ -32,6 +32,7 @@ class LocalStorageService {
   static const String UUID = 'uuid';
   static const String AppBackground = 'backgroundImage';
   static const String AppBackgroundChanged = 'backgroundImageChanged';
+  static const String User = 'user';
 
   bool get agreeTNC => _getFromDisk(HasAgreedToTNC) ?? false;
   set agreeTNC(bool value) => _saveToDisk(HasAgreedToTNC, value);
@@ -58,6 +59,9 @@ class LocalStorageService {
   String get username => _getFromDisk(UsernameKey) ?? '';
   set username(String value) => _saveToDisk(UsernameKey, value);
 
+  String get user => _getFromDisk(User) ?? '';
+  set user(String value) => _saveToDisk(User, value);
+
   String get backgroundImage =>
       _getFromDisk(AppBackground) ?? "assets/images/bk2.jpg";
   set backgroundImage(String value) => _saveToDisk(AppBackground, value);
@@ -72,7 +76,7 @@ class LocalStorageService {
   set profilePic(String value) => _saveToDisk(ProfilePicKey, value);
 
   void _saveToDisk<T>(String key, T content) {
-    //print('(TRACE) LocalStorageService:_saveToDisk. key: $key value: $content');
+    print('(TRACE) LocalStorageService:_saveToDisk. key: $key value: $content');
 
     if (content is String) {
       _preferences.setString(key, content);
