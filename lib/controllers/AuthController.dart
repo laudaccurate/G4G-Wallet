@@ -2,6 +2,7 @@
 
 // ignore_for_file: file_names, prefer_const_constructors, use_build_context_synchronously
 
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,8 +21,6 @@ class AuthController {
   static login(
     BuildContext context,
     details,
-    String bio,
-    GlobalKey<ScaffoldState> key,
   ) async {
     final def = Provider.of<Globals>(context, listen: false);
 
@@ -31,36 +30,16 @@ class AuthController {
       bool checkinternet = await internetCheck();
       def.setLoading(true);
       if (checkinternet) {
-        var res = await AuthAPI.login(details, bio: bio);
+        var res = await AuthAPI.login(details);
 
-        user.setUser(res.data);
+        // user.setUser(res.data);
 
-        if (res.data.customerType == "I") {
-          // await AccountController.getAccounts(context: context);
-          // var expenses = await UtilitiesAPI.getExpenses();
-          // def.setExpenseTypes(expenses);
-
-          def.setProfilePic(storageService.profilePic);
-
-          if (res.data.firstTimeLogin) {
-            storageService.username = "";
-          } else if (res.data.changePassword) {
-            storageService.username = details["userId"];
-          } else if (res.data.setPin) {
-            storageService.username = details["userId"];
-          } else {
-            storageService.username = details["userId"];
-            storageService.isLoggedIn = true;
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => LandingPage()),
-              (route) => false,
-            );
-          }
-        } else {
-          showNetworkMessage(context,
-              "Corporate accounts are not allowed to use this platform");
-        }
+        storageService.user = jsonEncode(res['response_data']);
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => LandingPage()),
+          (route) => false,
+        );
 
         // _user.setAccount(data.data);
 
@@ -252,8 +231,6 @@ class AuthController {
   static payFromWallet(
     BuildContext context,
     details,
-    String bio,
-    GlobalKey<ScaffoldState> key,
   ) async {
     final def = Provider.of<Globals>(context, listen: false);
 
@@ -263,7 +240,7 @@ class AuthController {
       bool checkinternet = await internetCheck();
       def.setLoading(true);
       if (checkinternet) {
-        var res = await AuthAPI.payFromWallet(details, bio: bio);
+        var res = await AuthAPI.payFromWallet(details);
 
         user.setUser(res.data);
 

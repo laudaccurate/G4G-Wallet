@@ -12,17 +12,11 @@ import 'dart:convert';
 
 class AuthAPI {
 // LOGIN
-  static Future<LoginModel> login(Map<String, dynamic> details,
-      {String bio}) async {
+  static Future login(
+    Map<String, dynamic> details,
+  ) async {
     //print("API called");
-    String url;
-    if (bio == null) {
-      url = "${Constants.url}user/login";
-    } else {
-      url = "${Constants.url}user/biologin";
-    }
-
-    print(url);
+    String url = "${Constants.url}/CAMLLogin";
 
     print("LOGGING IN");
     details.forEach((key, value) => print("$key = $value"));
@@ -32,24 +26,20 @@ class AuthAPI {
       body: jsonEncode(details),
     );
 
-    print("======");
-    print(response.body);
-    print("======");
-
     if (response.statusCode == 200) {
       Map<String, dynamic> result = json.decode(response.body);
 
-      if (result["responseCode"] == "000") {
-        LoginModel responds = LoginModel.fromJson(json.decode(response.body));
+      if (result["response_code"] == "00") {
+        var res = jsonDecode(response.body);
         log(response.body);
         //print("____user");
         //print(responds.data.accountsList[0].localEquivalentAvailableBalance);
         //print(responds.data.accountsList[0].accountNumber);
-        return responds;
+        return res;
       } else {
         throw PlatformException(
-          code: result["responseCode"].toString(),
-          message: result["message"],
+          code: result["response_code"].toString(),
+          message: result["response_message"],
         );
       }
       // return responds;
@@ -102,7 +92,7 @@ class AuthAPI {
       } else {
         throw PlatformException(
           code: result["responseCode"].toString(),
-          message: result["message"],
+          message: result["response_message"],
         );
       }
       // return responds;
@@ -126,15 +116,7 @@ class AuthAPI {
     final response = await http.post(
       Uri.parse(url),
       headers: Constants.header,
-      body: jsonEncode({
-        "channel_code": "APISNG",
-        "customer_tier": "2",
-        "reference": "NXG34567898FGHJJB1",
-        "account_no": "0689658501",
-        "bvn": "22152793496",
-        "password": "Password10",
-        "nin": ""
-      }),
+      body: jsonEncode(details),
     );
 
     print("======");
@@ -154,7 +136,7 @@ class AuthAPI {
       } else {
         throw PlatformException(
           code: result["responseCode"].toString(),
-          message: result["message"],
+          message: result["response_message"],
         );
       }
       // return responds;
@@ -178,21 +160,7 @@ class AuthAPI {
     final response = await http.post(
       Uri.parse(url),
       headers: Constants.header,
-      body: jsonEncode({
-        {
-          "channel_code": "APISNG",
-          "customer_tier": "2",
-          "reference": "NXG34567898FGHJJB8",
-          "account_no": "0068626654",
-          "director_bvn": "22334744900",
-          "tin": "00000015-0001",
-          "user_name": "accessbank",
-          "city": "Lagos",
-          "state": "Lagos",
-          "wallet_category": "parent",
-          "password": "Password10"
-        }
-      }),
+      body: jsonEncode(details),
     );
 
     print("======");
@@ -212,7 +180,7 @@ class AuthAPI {
       } else {
         throw PlatformException(
           code: result["responseCode"].toString(),
-          message: result["message"],
+          message: result["response_message"],
         );
       }
       // return responds;
@@ -237,21 +205,7 @@ class AuthAPI {
     final response = await http.post(
       Uri.parse(url),
       headers: Constants.header,
-      body: jsonEncode({
-        {
-          "channel_code": "APISNG",
-          "customer_tier": "2",
-          "reference": "NXG34567898FGHJJB8",
-          "account_no": "0068626654",
-          "director_bvn": "22334744900",
-          "tin": "00000015-0001",
-          "user_name": "accessbank",
-          "city": "Lagos",
-          "state": "Lagos",
-          "wallet_category": "parent",
-          "password": "Password10"
-        }
-      }),
+      body: jsonEncode(details),
     );
 
     print("======");
@@ -271,7 +225,7 @@ class AuthAPI {
       } else {
         throw PlatformException(
           code: result["responseCode"].toString(),
-          message: result["message"],
+          message: result["response_message"],
         );
       }
       // return responds;
