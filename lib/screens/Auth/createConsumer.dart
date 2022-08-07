@@ -4,9 +4,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:gfg_wallet/controllers/AuthController.dart';
 import 'package:gfg_wallet/provider/globals.dart';
 import 'package:gfg_wallet/screens/Auth/loginScreen.dart';
-import 'package:gfg_wallet/screens/landing_page.dart';
 import 'package:gfg_wallet/utils/constants.dart';
 import 'package:gfg_wallet/utils/themes.dart';
 
@@ -612,28 +612,24 @@ class _CreateConsumerScreenState extends State<CreateConsumerScreen> {
             )
           : FlatButton(
               onPressed: () async {
-                Navigator.push(
+                print('trying to login');
+                if (userNameController.text.isNotEmpty &&
+                    passwordController.text.isNotEmpty) {
+                  AuthController.createConsumer(
                     context,
-                    MaterialPageRoute(
-                      builder: ((context) => LandingPage()),
-                    ));
-                // print('trying to login');
-                // if (validateId() == null &&
-                //     memberIdController.text != '' &&
-                //     validatePassword() == null &&
-                //     passwordController.text != '') {
-                //   AuthController.login(
-                //     context,
-                //     {
-                //       "memberId": memberIdController.text,
-                //       "password": passwordController.text,
-                //     },
-                //     '',
-                //     login,
-                //   );
-                // } else {
-                //   print('invalid data');
-                // }
+                    {
+                      "channel_code": "APISNG",
+                      "customer_tier": "2",
+                      "reference": "NXG34567898FGHJJB1",
+                      "account_no": accountController.text,
+                      "bvn": bvnController.text,
+                      "password": passwordController.text,
+                      "nin": tinController.text
+                    },
+                  );
+                } else {
+                  print('invalid data');
+                }
               },
               child: const Text(
                 'Create Account',

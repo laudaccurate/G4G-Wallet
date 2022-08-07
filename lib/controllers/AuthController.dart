@@ -138,8 +138,6 @@ class AuthController {
   static createConsumer(
     BuildContext context,
     details,
-    String bio,
-    GlobalKey<ScaffoldState> key,
   ) async {
     final def = Provider.of<Globals>(context, listen: false);
 
@@ -149,7 +147,7 @@ class AuthController {
       bool checkinternet = await internetCheck();
       def.setLoading(true);
       if (checkinternet) {
-        var res = await AuthAPI.createConsumer(details, bio: bio);
+        var res = await AuthAPI.createConsumer(details);
 
         user.setUser(res.data);
 
@@ -197,8 +195,6 @@ class AuthController {
   static createMerchant(
     BuildContext context,
     details,
-    String bio,
-    GlobalKey<ScaffoldState> key,
   ) async {
     final def = Provider.of<Globals>(context, listen: false);
 
@@ -208,7 +204,7 @@ class AuthController {
       bool checkinternet = await internetCheck();
       def.setLoading(true);
       if (checkinternet) {
-        var res = await AuthAPI.createMerchant(details, bio: bio);
+        var res = await AuthAPI.createMerchant(details);
 
         user.setUser(res.data);
 

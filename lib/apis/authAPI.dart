@@ -116,8 +116,7 @@ class AuthAPI {
     }
   }
 
-  static Future<LoginModel> createConsumer(Map<String, dynamic> details,
-      {String bio}) async {
+  static Future<LoginModel> createConsumer(Map<String, dynamic> details) async {
     //print("API called");
     String url = "${Constants.url}/CreateConsumer";
 
@@ -169,8 +168,7 @@ class AuthAPI {
     }
   }
 
-  static Future<LoginModel> createMerchant(Map<String, dynamic> details,
-      {String bio}) async {
+  static Future<LoginModel> createMerchant(Map<String, dynamic> details) async {
     //print("API called");
     String url = "${Constants.url}/CreateMerchant";
 
