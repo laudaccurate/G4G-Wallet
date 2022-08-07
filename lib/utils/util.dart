@@ -7,7 +7,9 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttercontactpicker/fluttercontactpicker.dart';
 import 'package:gfg_wallet/models.dart/accountModels.dart';
+import 'package:gfg_wallet/utils/mockData.dart';
 import 'package:gfg_wallet/utils/themes.dart';
+import 'package:gfg_wallet/widgets/account_selection_tile.dart';
 import 'package:gfg_wallet/widgets/appBar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -223,7 +225,7 @@ class Utilities {
         return StatefulBuilder(
           builder: (context, setState) {
             return Container(
-              height: screenHeight * (0.11 * accounts.length + 0.25),
+              height: screenHeight * (0.11 * MockData.accounts.length + 0.25),
               padding: EdgeInsets.symmetric(
                 horizontal: screenWidth * 0.001,
                 vertical: screenHeight * 0.000,
@@ -281,17 +283,16 @@ class Utilities {
                     SizedBox(height: screenHeight * 0.03),
                     Expanded(
                       child: ListView.builder(
-                        itemCount: accounts.length,
-                        itemBuilder: ((context, index) => Container()),
-                        // itemBuilder: (context, index) => AccountSelectionTile(
-                        //   account: accounts[index],
-                        //   index: index,
-                        //   selectedIndex: selectedAcc,
-                        //   onActivated: () {
-                        //     Navigator.of(context).pop();
-                        //     onAcctSelected(accounts[index]);
-                        //   },
-                        // ),
+                        itemCount: MockData.accounts.length,
+                        itemBuilder: (context, index) => AccountSelectionTile(
+                          account: MockData.accounts[index],
+                          index: index,
+                          selectedIndex: selectedAcc,
+                          onActivated: () {
+                            Navigator.of(context).pop();
+                            onAcctSelected(MockData.accounts[index]);
+                          },
+                        ),
                       ),
                     ),
                     // SizedBox(height: _screenHeight * 0.002),

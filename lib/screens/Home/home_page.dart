@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gfg_wallet/models.dart/transHistoryModel.dart';
 import 'package:gfg_wallet/provider/userProvider.dart';
+import 'package:gfg_wallet/screens/Payments/wallet.dart';
 import 'package:gfg_wallet/screens/settingsScreen.dart';
 import 'package:gfg_wallet/screens/transHistory.dart';
 import 'package:gfg_wallet/services/localStorage.dart';
@@ -280,18 +281,18 @@ class _HomePageState extends State<HomePage> {
                       label: 'Transfer',
                     ),
                     MenuOptions(
-                      icon: CupertinoIcons.briefcase,
+                      icon: Icons.account_balance_wallet_outlined,
                       color: Colors.cyan,
                       function: () {},
-                      label: 'Withdraw',
+                      label: 'Payments',
                       display: payment(context),
                     ),
                     MenuOptions(
-                      icon: Icons.account_balance_wallet_outlined,
+                      icon: CupertinoIcons.qrcode_viewfinder,
                       color: Colors.purpleAccent,
                       function: () {},
-                      display: loans(context),
-                      label: 'Bill',
+                      display: requests(context),
+                      label: 'QR Pay',
                     ),
                     MenuOptions(
                       icon: CupertinoIcons.cart_badge_plus,
@@ -385,9 +386,9 @@ class _HomePageState extends State<HomePage> {
   transfers(context) {
     return Column(children: [
       SettingTile(
-        label: 'Own Account',
+        label: 'Mobile Transfer',
         color: Colors.cyan,
-        icon: Icons.person,
+        icon: Icons.mobile_screen_share_rounded,
         func: () {
           Navigator.push(
             context,
@@ -398,21 +399,9 @@ class _HomePageState extends State<HomePage> {
         },
       ),
       SettingTile(
-        label: 'Same Bank',
-        color: Colors.orange,
-        icon: Icons.people_alt,
-        func: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Container(),
-              ));
-        },
-      ),
-      SettingTile(
-        label: 'Other Bank(ACH)',
+        label: 'Bank Transfer',
         color: Colors.purple,
-        icon: Icons.bubble_chart,
+        icon: Icons.account_balance_rounded,
         func: () {
           Navigator.push(
               context,
@@ -422,9 +411,9 @@ class _HomePageState extends State<HomePage> {
         },
       ),
       SettingTile(
-        label: 'Salone Link',
+        label: 'International Transfer',
         color: Colors.red,
-        icon: Icons.account_balance,
+        icon: CupertinoIcons.globe,
         func: () {
           Navigator.push(
               context,
@@ -436,76 +425,29 @@ class _HomePageState extends State<HomePage> {
     ]);
   }
 
-  beneficiaries(context) {
-    return Container();
-  }
-
   investments(context) {
-    return Container();
-  }
-
-  loans(context) {
     return Container();
   }
 
   requests(context) {
     return Column(children: [
       SettingTile(
-        label: 'Statement Request',
+        label: 'Pay With QR',
+        color: Colors.lightBlueAccent,
+        icon: CupertinoIcons.qrcode_viewfinder,
+        func: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Container(),
+            ),
+          );
+        },
+      ),
+      SettingTile(
+        label: 'Receive from QR',
         color: Colors.cyan,
-        icon: Icons.receipt_long,
-        func: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Container(),
-            ),
-          );
-        },
-      ),
-      SettingTile(
-        label: 'Cheque Book Request',
-        color: Colors.orange,
-        icon: Icons.menu_book,
-        func: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Container(),
-            ),
-          );
-        },
-      ),
-      SettingTile(
-        label: 'Salary Advance',
-        color: Colors.purple,
-        icon: Icons.volunteer_activism,
-        func: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Container(),
-            ),
-          );
-        },
-      ),
-      SettingTile(
-        label: 'View Forex Rate',
-        color: Colors.teal,
-        icon: Icons.bar_chart,
-        func: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Container(),
-            ),
-          );
-        },
-      ),
-      SettingTile(
-        label: 'Stop Cheque',
-        color: Colors.red,
-        icon: Icons.block,
+        icon: Icons.qr_code_scanner_rounded,
         func: () {
           Navigator.push(
             context,
@@ -521,58 +463,21 @@ class _HomePageState extends State<HomePage> {
   payment(context) {
     return Column(children: [
       SettingTile(
-          label: 'Airtime Topup',
-          color: Color(0XFF9c1d7c),
-          icon: Icons.phone_iphone_rounded,
-          func: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Container(),
-                ));
-          }),
-      SettingTile(
-        label: 'Account to Mobile Money',
+        label: 'Pay from Wallet',
         color: Colors.orange,
-        icon: Icons.add_to_home_screen,
+        icon: Icons.account_balance_wallet_rounded,
         func: () {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => Container(),
+                builder: (context) => WalletPayment(),
               ));
         },
       ),
       SettingTile(
-        label: 'Mobile Money to Account',
+        label: 'Pay With PIN',
         color: Color.fromARGB(255, 240, 32, 129),
-        icon: Icons.account_balance,
-        func: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Container(),
-            ),
-          );
-        },
-      ),
-      SettingTile(
-        label: 'Blink Pay',
-        color: Colors.teal,
-        icon: CupertinoIcons.arrowshape_turn_up_left_2,
-        func: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Container(),
-            ),
-          );
-        },
-      ),
-      SettingTile(
-        label: 'QR Payment',
-        color: Colors.lightBlueAccent,
-        icon: CupertinoIcons.qrcode_viewfinder,
+        icon: Icons.password_rounded,
         func: () {
           Navigator.push(
             context,
@@ -584,7 +489,7 @@ class _HomePageState extends State<HomePage> {
       ),
       SettingTile(
         label: 'Utility Payment',
-        color: Color(0XFF0c009b),
+        color: Colors.teal,
         icon: Icons.electrical_services_rounded,
         func: () {
           Navigator.push(
@@ -596,9 +501,9 @@ class _HomePageState extends State<HomePage> {
         },
       ),
       SettingTile(
-        label: 'School Payments',
-        color: Colors.lightGreenAccent,
-        icon: Icons.school,
+        label: 'Airtime Topup',
+        color: Color(0XFF0c009b),
+        icon: Icons.phone_iphone_outlined,
         func: () {
           Navigator.push(
             context,

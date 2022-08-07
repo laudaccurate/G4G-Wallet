@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 // final kScreenHeight = MediaQuery.of(context)
 
-final kTitleStyle = TextStyle(
+const kTitleStyle = const TextStyle(
   color: Colors.blueGrey,
   fontFamily: 'CM Sans Serif',
   fontSize: 26.0,
@@ -12,7 +12,7 @@ final kTitleStyle = TextStyle(
 final kInputLabelStyle = TextStyle(
   fontSize: 14.0,
   fontWeight: FontWeight.w400,
-  color: Colors.grey[700],
+  color: Colors.grey[400],
 );
 
 final kAuthInputLabelStyle = TextStyle(
@@ -32,21 +32,21 @@ final kDropdownHeaderStyle = TextStyle(
   fontSize: 14.0,
 );
 
-final kSubtitleStyle = TextStyle(
+const kSubtitleStyle = const TextStyle(
   color: Colors.blueGrey,
   fontSize: 16.0,
   height: 1.1,
 );
 
-final mainColor = Color(0xFF24166b);
-final secondaryColor = Color(0xFFffbc40);
+const mainColor = const Color(0xFF24166b);
+const secondaryColor = const Color(0xFFffbc40);
 final boxshadow = [
   BoxShadow(
       color: Colors.grey.shade500,
-      offset: Offset(4, 4),
+      offset: const Offset(4, 4),
       blurRadius: 10,
       spreadRadius: 1.0),
-  BoxShadow(
+  const BoxShadow(
       color: Colors.white,
       offset: Offset(-4, -4),
       blurRadius: 10,
