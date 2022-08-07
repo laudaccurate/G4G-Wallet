@@ -42,9 +42,9 @@ class Constants {
   // static String documentUrl = "http://41.78.85.63:9096/";
   // static String url = "http://192.168.1.225:8680/ibank/api/v1.0/";
   static final dynamic header = {
-    "content-Type": "application/json",
+    "content-type": "application/json",
     "accept": "application/json",
-    "ClientId": ""
+    "ClientId": "87fc8dbe1cc78856a16a0b4af04ef76f"
   };
 
   static final dynamic apiHeaders = {
