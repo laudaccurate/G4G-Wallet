@@ -2,9 +2,13 @@
 // @dart=2.9
 
 import 'package:animations/animations.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:gfg_wallet/provider/globals.dart';
 import 'package:gfg_wallet/utils/constants.dart';
 import 'package:gfg_wallet/utils/themes.dart';
+import 'package:gfg_wallet/widgets/pin_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -201,309 +205,309 @@ customBottomSheet(
   );
 }
 
-// confirmationScreen(
-//     {@required BuildContext context,
-//     @required Map data,
-//     @required TextEditingController pinController,
-//     @required Function onSubmit,
-//     @required String amount}) async {
-//   final _globals = Provider.of<Globals>(context, listen: false);
-//   final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
-//   bool saveBeneficiary = false;
+confirmationScreen(
+    {@required BuildContext context,
+    @required Map data,
+    @required TextEditingController pinController,
+    @required Function onSubmit,
+    @required String amount}) async {
+  final _globals = Provider.of<Globals>(context, listen: false);
+  final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+  bool saveBeneficiary = false;
 
-//   return await showCupertinoModalPopup(
-//     barrierDismissible: true,
-//     context: context,
-//     builder: (context) {
-//       double _screenHeight = MediaQuery.of(context).size.height;
+  return await showCupertinoModalPopup(
+    barrierDismissible: true,
+    context: context,
+    builder: (context) {
+      double _screenHeight = MediaQuery.of(context).size.height;
 
-//       return SafeArea(
-//         bottom: false,
-//         child: GestureDetector(
-//           onTap: () {
-//             FocusScope.of(context).unfocus();
-//           },
-//           child: Material(
-//             child: Container(
-//               height: MediaQuery.of(context).size.height * 0.7,
-//               padding: EdgeInsets.only(top: 10),
-//               child: Column(
-//                 children: [
-//                   Expanded(
-//                     child: Padding(
-//                       padding: const EdgeInsets.symmetric(vertical: 10),
-//                       child: ListView(
-//                         children: [
-//                           Row(
-//                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                             children: [
-//                               Expanded(
-//                                 child: Row(
-//                                   mainAxisAlignment: MainAxisAlignment.center,
-//                                   children: [
-//                                     Text(
-//                                       'Confirm Transaction'.toUpperCase(),
-//                                       style: GoogleFonts.montserrat(
-//                                         fontSize: 15.0,
-//                                         color: themeProvider.isLightTheme
-//                                             ? Constants.secondaryColor
-//                                             : Colors.white,
-//                                         fontWeight: FontWeight.bold,
-//                                       ),
-//                                     ),
-//                                   ],
-//                                 ),
-//                               ),
-//                               Row(
-//                                 mainAxisAlignment: MainAxisAlignment.end,
-//                                 children: [
-//                                   IconButton(
-//                                     icon: Icon(Icons.close_rounded),
-//                                     padding: EdgeInsets.zero,
-//                                     onPressed: () {
-//                                       pinController.clear();
-//                                       Navigator.pop(context);
-//                                     },
-//                                   ),
-//                                 ],
-//                               ),
-//                             ],
-//                           ),
-//                           SizedBox(height: 10),
-//                           ...data.entries
-//                               .toList()
-//                               .map(
-//                                 (entry) => Padding(
-//                                   padding: const EdgeInsets.symmetric(
-//                                     horizontal: 10.0,
-//                                   ),
-//                                   child: Container(
-//                                     padding: const EdgeInsets.symmetric(
-//                                       vertical: 13.0,
-//                                       horizontal: 4.0,
-//                                     ),
-//                                     decoration: BoxDecoration(
-//                                       border: Border(
-//                                         bottom: BorderSide(
-//                                             width: 1.0,
-//                                             color: Colors.grey[400]),
-//                                       ),
-//                                     ),
-//                                     child: Row(
-//                                       mainAxisAlignment:
-//                                           MainAxisAlignment.spaceBetween,
-//                                       children: [
-//                                         Text(
-//                                           "${entry.key}  ",
-//                                           style: GoogleFonts.comfortaa(
-//                                             fontSize: 14.0,
-//                                             color: Colors.grey,
-//                                           ),
-//                                         ),
-//                                         Flexible(
-//                                           child: Text(
-//                                             entry.value.toUpperCase(),
-//                                             textAlign: TextAlign.right,
-//                                             style: GoogleFonts.comfortaa(
-//                                               fontSize: 14.0,
-//                                               fontWeight: FontWeight.w600,
-//                                               color: themeProvider.isLightTheme
-//                                                   ? Colors.grey[700]
-//                                                   : Colors.white,
-//                                             ),
-//                                           ),
-//                                         ),
-//                                       ],
-//                                     ),
-//                                   ),
-//                                 ),
-//                               )
-//                               .toList(),
-//                           // StatefulBuilder(
-//                           //   builder: (BuildContext context, setState) {
-//                           //     return SettingTile(
-//                           //       label: 'Save Beneficiary',
-//                           //       hideBorder: true,
-//                           //       icon: Icons.person,
-//                           //       color: Colors.green,
-//                           //       trailing: Row(
-//                           //         mainAxisSize: MainAxisSize.min,
-//                           //         mainAxisAlignment: MainAxisAlignment.end,
-//                           //         children: [
-//                           //           Text(
-//                           //             saveBeneficiary ? 'YES' : 'NO',
-//                           //             style: TextStyle(
-//                           //               color: Colors.grey[300],
-//                           //               fontSize: 15.0,
-//                           //               fontWeight: FontWeight.w600,
-//                           //             ),
-//                           //           ),
-//                           //           SizedBox(width: 5.0),
-//                           //           CupertinoSwitch(
-//                           //             activeColor: Constants.mainColor,
-//                           //             value: saveBeneficiary,
-//                           //             onChanged: (state) {
-//                           //               setState(() {
-//                           //                 saveBeneficiary = state;
-//                           //               });
+      return SafeArea(
+        bottom: false,
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Material(
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.7,
+              padding: EdgeInsets.only(top: 10),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: ListView(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Confirm Transaction'.toUpperCase(),
+                                      style: GoogleFonts.montserrat(
+                                        fontSize: 15.0,
+                                        color: themeProvider.isLightTheme
+                                            ? Constants.secondaryColor
+                                            : Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  IconButton(
+                                    icon: Icon(Icons.close_rounded),
+                                    padding: EdgeInsets.zero,
+                                    onPressed: () {
+                                      pinController.clear();
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                          ...data.entries
+                              .toList()
+                              .map(
+                                (entry) => Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0,
+                                  ),
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 13.0,
+                                      horizontal: 4.0,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                            width: 1.0,
+                                            color: Colors.grey[400]),
+                                      ),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "${entry.key}  ",
+                                          style: GoogleFonts.comfortaa(
+                                            fontSize: 14.0,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        Flexible(
+                                          child: Text(
+                                            entry.value.toUpperCase(),
+                                            textAlign: TextAlign.right,
+                                            style: GoogleFonts.comfortaa(
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.w600,
+                                              color: themeProvider.isLightTheme
+                                                  ? Colors.grey[700]
+                                                  : Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                          // StatefulBuilder(
+                          //   builder: (BuildContext context, setState) {
+                          //     return SettingTile(
+                          //       label: 'Save Beneficiary',
+                          //       hideBorder: true,
+                          //       icon: Icons.person,
+                          //       color: Colors.green,
+                          //       trailing: Row(
+                          //         mainAxisSize: MainAxisSize.min,
+                          //         mainAxisAlignment: MainAxisAlignment.end,
+                          //         children: [
+                          //           Text(
+                          //             saveBeneficiary ? 'YES' : 'NO',
+                          //             style: TextStyle(
+                          //               color: Colors.grey[300],
+                          //               fontSize: 15.0,
+                          //               fontWeight: FontWeight.w600,
+                          //             ),
+                          //           ),
+                          //           SizedBox(width: 5.0),
+                          //           CupertinoSwitch(
+                          //             activeColor: Constants.mainColor,
+                          //             value: saveBeneficiary,
+                          //             onChanged: (state) {
+                          //               setState(() {
+                          //                 saveBeneficiary = state;
+                          //               });
 
-//                           //               // toggleFastBalance(state);
-//                           //             },
-//                           //           )
-//                           //         ],
-//                           //       ),
-//                           //       func: () {},
-//                           //     );
-//                           //   },
-//                           // ),
-//                           SizedBox(height: 30),
-//                           // Padding(
-//                           //   padding: const EdgeInsets.all(8.0),
-//                           //   child: Label('Enter transaction pin'),
-//                           // ),
-//                           SizedBox(height: 10),
-//                           // Padding(
-//                           //   padding: const EdgeInsets.all(15.0),
-//                           //   child: PinputField(
-//                           //     controller: pinController,
-//                           //     label: 'Enter PIN',
-//                           //     obscure: true,
-//                           //   ),
-//                           // ),
-//                         ],
-//                       ),
-//                     ),
-//                   ),
-//                   const SizedBox(height: 10),
-//                   SizedBox(height: _screenHeight * 0.02),
-//                   // Padding(
-//                   //   padding: const EdgeInsets.all(10.0),
-//                   //   child: InfoCard(
-//                   //     info:
-//                   //         "By entering your transaction pin, you agree to abide by the Terms and Conditions",
-//                   //   ),
-//                   // ),
-//                   const SizedBox(height: 5),
-//                   Container(
-//                     color: Colors.green,
-//                     padding: EdgeInsets.only(top: 10, bottom: 10),
-//                     width: double.infinity,
-//                     // height: 100,
-//                     child: RaisedButton(
-//                       elevation: 0,
-//                       highlightElevation: 0,
-//                       splashColor: Colors.transparent,
-//                       highlightColor: Colors.transparent,
-//                       color: Colors.green,
-//                       onPressed: () {
-//                         // Navigator.pop(context);
-//                         Navigator.push(
-//                           context,
-//                           MaterialPageRoute(
-//                             builder: (_) => PinCodeVerificationScreen(
-//                               onSubmit: onSubmit,
-//                               pinController: pinController,
-//                               email: '',
-//                               phoneNumber: '',
-//                             ),
-//                           ),
-//                         );
-//                       },
-//                       child: _globals.getLoading
-//                           ? SpinKitCircle(
-//                               color: Colors.white,
-//                               size: 22.0,
-//                             )
-//                           : Text(
-//                               'Confirm'.toUpperCase(),
-//                               style: TextStyle(
-//                                 color: Colors.white,
-//                                 // fontWeight: FontWeight.bold,
-//                                 fontSize: 17,
-//                                 letterSpacing: 0.5,
-//                               ),
-//                             ),
-//                     ),
-//                   ),
-//                   /*Row(
-//                     children: [
-//                       Expanded(
-//                         flex: 2,
-//                         child: Container(
-//                           color: Constants.mainColor,
+                          //               // toggleFastBalance(state);
+                          //             },
+                          //           )
+                          //         ],
+                          //       ),
+                          //       func: () {},
+                          //     );
+                          //   },
+                          // ),
+                          SizedBox(height: 30),
+                          // Padding(
+                          //   padding: const EdgeInsets.all(8.0),
+                          //   child: Label('Enter transaction pin'),
+                          // ),
+                          SizedBox(height: 10),
+                          // Padding(
+                          //   padding: const EdgeInsets.all(15.0),
+                          //   child: PinputField(
+                          //     controller: pinController,
+                          //     label: 'Enter PIN',
+                          //     obscure: true,
+                          //   ),
+                          // ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  SizedBox(height: _screenHeight * 0.02),
+                  // Padding(
+                  //   padding: const EdgeInsets.all(10.0),
+                  //   child: InfoCard(
+                  //     info:
+                  //         "By entering your transaction pin, you agree to abide by the Terms and Conditions",
+                  //   ),
+                  // ),
+                  const SizedBox(height: 5),
+                  Container(
+                    color: Colors.green,
+                    padding: EdgeInsets.only(top: 10, bottom: 10),
+                    width: double.infinity,
+                    // height: 100,
+                    child: RaisedButton(
+                      elevation: 0,
+                      highlightElevation: 0,
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      color: Colors.green,
+                      onPressed: () {
+                        // Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => PinCodeVerificationScreen(
+                              onSubmit: onSubmit,
+                              pinController: pinController,
+                              email: '',
+                              phoneNumber: '',
+                            ),
+                          ),
+                        );
+                      },
+                      child: _globals.getLoading
+                          ? SpinKitCircle(
+                              color: Colors.white,
+                              size: 22.0,
+                            )
+                          : Text(
+                              'Confirm'.toUpperCase(),
+                              style: TextStyle(
+                                color: Colors.white,
+                                // fontWeight: FontWeight.bold,
+                                fontSize: 17,
+                                letterSpacing: 0.5,
+                              ),
+                            ),
+                    ),
+                  ),
+                  /*Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Container(
+                          color: Constants.mainColor,
 
-//                           padding: EdgeInsets.only(bottom: 15),
-//                           // height: 100,
-//                           child: RaisedButton(
-//                             elevation: 0,
-//                             highlightElevation: 0,
-//                             splashColor: Colors.transparent,
-//                             highlightColor: Colors.transparent,
-//                             color: Constants.mainColor,
-//                             onPressed: () {
-//                               Navigator.pop(context);
-//                             },
-//                             child: _globals.getLoading
-//                                 ? SpinKitCircle(
-//                                     color: Colors.white,
-//                                     size: 22.0,
-//                                   )
-//                                 : Text(
-//                                     'Cancel'.toUpperCase(),
-//                                     style: TextStyle(
-//                                       color: Colors.white,
-//                                       // fontWeight: FontWeight.bold,
-//                                       fontSize: 17,
-//                                       letterSpacing: 0.5,
-//                                     ),
-//                                   ),
-//                           ),
-//                         ),
-//                       ),
-//                       Expanded(
-//                         flex: 3,
-//                         child: Container(
-//                           color: Colors.green,
-//                           padding: EdgeInsets.only(bottom: 15),
+                          padding: EdgeInsets.only(bottom: 15),
+                          // height: 100,
+                          child: RaisedButton(
+                            elevation: 0,
+                            highlightElevation: 0,
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            color: Constants.mainColor,
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: _globals.getLoading
+                                ? SpinKitCircle(
+                                    color: Colors.white,
+                                    size: 22.0,
+                                  )
+                                : Text(
+                                    'Cancel'.toUpperCase(),
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      // fontWeight: FontWeight.bold,
+                                      fontSize: 17,
+                                      letterSpacing: 0.5,
+                                    ),
+                                  ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Container(
+                          color: Colors.green,
+                          padding: EdgeInsets.only(bottom: 15),
 
-//                           // height: 100,
-//                           child: RaisedButton(
-//                             elevation: 0,
-//                             highlightElevation: 0,
-//                             splashColor: Colors.transparent,
-//                             highlightColor: Colors.transparent,
-//                             color: Colors.green,
-//                             onPressed: () {
-//                               Navigator.pop(context);
-//                             },
-//                             child: _globals.getLoading
-//                                 ? SpinKitCircle(
-//                                     color: Colors.white,
-//                                     size: 22.0,
-//                                   )
-//                                 : Text(
-//                                     'Confirm'.toUpperCase(),
-//                                     style: TextStyle(
-//                                       color: Colors.white,
-//                                       // fontWeight: FontWeight.bold,
-//                                       fontSize: 17,
-//                                       letterSpacing: 0.5,
-//                                     ),
-//                                   ),
-//                           ),
-//                         ),
-//                       ),
-//                     ],
-//                   )*/
-//                 ],
-//               ),
-//             ),
-//           ),
-//         ),
-//       );
-//     },
-//   );
-// }
+                          // height: 100,
+                          child: RaisedButton(
+                            elevation: 0,
+                            highlightElevation: 0,
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            color: Colors.green,
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: _globals.getLoading
+                                ? SpinKitCircle(
+                                    color: Colors.white,
+                                    size: 22.0,
+                                  )
+                                : Text(
+                                    'Confirm'.toUpperCase(),
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      // fontWeight: FontWeight.bold,
+                                      fontSize: 17,
+                                      letterSpacing: 0.5,
+                                    ),
+                                  ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )*/
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}
 
 class DescriptionTitle extends StatelessWidget {
   final String description;
