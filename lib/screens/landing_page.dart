@@ -2,10 +2,14 @@
 // @dart=2.9
 
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gfg_wallet/provider/userProvider.dart';
+import 'package:gfg_wallet/screens/Home/home_page.dart';
+import 'package:gfg_wallet/screens/accounts.dart';
 import 'package:gfg_wallet/screens/settingsScreen.dart';
+import 'package:gfg_wallet/screens/statistics.dart';
 import 'package:gfg_wallet/utils/constants.dart';
 import 'package:gfg_wallet/utils/themes.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -25,10 +29,12 @@ class _LandingPageState extends State<LandingPage> {
 
     switch (page) {
       case 0:
-        return Container();
+        return HomePage();
       case 1:
-        return Container();
+        return MyStatistics();
       case 2:
+        return MyAccounts();
+      case 3:
         return SettingsScreen();
       case 4:
         return Container(
@@ -78,8 +84,17 @@ class _LandingPageState extends State<LandingPage> {
               textAlign: TextAlign.center,
             ),
             BottomNavyBarItem(
+              icon: const Icon(CupertinoIcons.chart_bar_square),
+              title: Text(
+                'Statistics',
+                style: textStyle,
+              ),
+              activeColor: iconColors,
+              textAlign: TextAlign.center,
+            ),
+            BottomNavyBarItem(
               icon: const Icon(
-                Icons.account_balance_rounded,
+                Icons.account_balance_wallet_rounded,
               ),
               title: Text(
                 'Accounts',

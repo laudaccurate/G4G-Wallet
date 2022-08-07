@@ -4,7 +4,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:gfg_wallet/utils/util.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class MenuOptions extends StatelessWidget {
   final String label;
@@ -25,19 +24,11 @@ class MenuOptions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Utilities.openContainer(
       context: context,
-      child: Column(
-        children: [
-          Icon(
-            icon,
-            color: color,
-          ),
-          const SizedBox(height: 5),
-          Text(
-            label,
-            style: GoogleFonts.lato(fontSize: 12),
-          ),
-        ],
+      child: Icon(
+        icon,
+        color: Colors.white,
       ),
+      color: color,
       label: label,
       display: display,
     );

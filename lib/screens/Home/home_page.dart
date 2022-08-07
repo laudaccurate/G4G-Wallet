@@ -6,12 +6,14 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gfg_wallet/models.dart/transHistoryModel.dart';
 import 'package:gfg_wallet/provider/userProvider.dart';
 import 'package:gfg_wallet/screens/settingsScreen.dart';
+import 'package:gfg_wallet/screens/transHistory.dart';
 import 'package:gfg_wallet/services/localStorage.dart';
 import 'package:gfg_wallet/services/serviceLocator.dart';
 import 'package:gfg_wallet/utils/constants.dart';
-import 'package:gfg_wallet/utils/retry.dart';
+import 'package:gfg_wallet/utils/mockData.dart';
 import 'package:gfg_wallet/utils/shimmerLoader.dart';
 import 'package:gfg_wallet/utils/util.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -97,7 +99,8 @@ class _HomePageState extends State<HomePage> {
                           ),
                           SizedBox(height: 9),
                           Text(
-                            user.getUser.userAlias.toUpperCase(),
+                            // user.getUser.userAlias.toUpperCase(),
+                            'LAUD GILBERT',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.comfortaa(
@@ -108,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           SizedBox(height: 10),
                           Text(
-                            "G4G Wallet",
+                            "G4G Wallet (Premium)",
                             style: GoogleFonts.comfortaa(
                               color: Colors.white,
                               fontSize: 13,
@@ -116,7 +119,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           SizedBox(height: 4),
                           Text(
-                            "Last login:${user.getUser.lastLogin}",
+                            "Last login:${Utilities.fullDateFormat(DateTime.now())}",
                             style: GoogleFonts.comfortaa(
                               color: Colors.white,
                               fontSize: 10,
@@ -134,22 +137,22 @@ class _HomePageState extends State<HomePage> {
                     currentIndex = index;
                   });
                 },
-                children: user.getAccountList
+                children: MockData.accounts
                     .map(
                       (acc) => AccountWidget(account: acc),
                     )
                     .toList(),
                 // children: [
-                //   AccountWidget(account: user.getAccountList[0]),
+                //   AccountWidget(account: MockData.accounts[0]),
                 // ],
               ),
-              // AccountWidget(account: user.getAccountList[0]),
+              // AccountWidget(account: MockData.accounts[0]),
               Align(
                 alignment: Alignment(-1, 1),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: map<Widget>(
-                    user.getAccountList,
+                    MockData.accounts,
                     (index, acc) {
                       return Container(
                         width: 6.5,
@@ -183,7 +186,7 @@ class _HomePageState extends State<HomePage> {
                       debitAccNum = storageService.defaultAccount != ''
                           ? jsonDecode(
                               storageService.defaultAccount)["accountNumber"]
-                          : user.getAccountList.first.accountNumber;
+                          : MockData.accounts.first.accountNumber;
                       var data = {
                         "accountNumber": debitAccNum,
                         "amount": "0",
@@ -259,59 +262,43 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  'Menu',
+                  'Features',
                   style: GoogleFonts.comfortaa(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 SizedBox(height: 10),
-                Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  spacing: MediaQuery.of(context).size.width * 0.07,
-                  runSpacing: 20,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     MenuOptions(
-                      icon: CupertinoIcons.rocket,
+                      icon: CupertinoIcons.paperplane,
                       color: Colors.teal,
                       function: () {},
                       display: transfers(context),
-                      label: 'Transfers',
+                      label: 'Transfer',
                     ),
                     MenuOptions(
-                      icon: Icons.payment,
+                      icon: CupertinoIcons.briefcase,
                       color: Colors.cyan,
                       function: () {},
-                      label: 'Payments',
+                      label: 'Withdraw',
                       display: payment(context),
                     ),
                     MenuOptions(
-                      icon: CupertinoIcons.layers_alt,
+                      icon: Icons.account_balance_wallet_outlined,
                       color: Colors.purpleAccent,
                       function: () {},
                       display: loans(context),
-                      label: 'Loans',
+                      label: 'Bill',
                     ),
                     MenuOptions(
-                      icon: CupertinoIcons.chart_bar,
+                      icon: CupertinoIcons.cart_badge_plus,
                       color: Colors.redAccent,
                       function: () {},
                       display: investments(context),
-                      label: 'Investments',
-                    ),
-                    MenuOptions(
-                      icon: CupertinoIcons.rectangle_fill_on_rectangle_fill,
-                      color: Colors.amber,
-                      function: () {},
-                      display: requests(context),
-                      label: 'Requests',
-                    ),
-                    MenuOptions(
-                      icon: Icons.people,
-                      color: Colors.lightBlue,
-                      function: () {},
-                      display: beneficiaries(context),
-                      label: 'Beneficiaries',
+                      label: 'Voucher',
                     ),
                   ],
                 )
@@ -330,7 +317,7 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Last Transactions',
+                    'Transactions',
                     style: GoogleFonts.comfortaa(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
@@ -338,82 +325,53 @@ class _HomePageState extends State<HomePage> {
                   ),
                   IconButton(
                     onPressed: toggleTransaction,
-                    icon: Icon(
-                      !showTransaction
-                          ? CupertinoIcons.eye
-                          : CupertinoIcons.eye_slash,
-                    ),
+                    icon: Icon(CupertinoIcons.slider_horizontal_3),
                   )
                 ],
               ),
-              FutureBuilder<dynamic>(
-                future: Future.delayed(Duration(seconds: 4), () {
+              FutureBuilder<List<TransHistoryDatum>>(
+                future: Future.delayed(Duration(seconds: 2), () {
                   print("future");
+
+                  return MockData.transactions;
                 }),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.none ||
                       snapshot.connectionState == ConnectionState.active ||
                       snapshot.connectionState == ConnectionState.waiting) {
                     return ShimmerLoader();
-                  } else if (snapshot.connectionState == ConnectionState.done) {
-                    // //print(snapshot.data);
-                    if (snapshot.hasError) {
-                      return CustomError(retry: () {
-                        print("Retry---||");
-                      });
-                    } else if (snapshot.hasData) {
-                      if (snapshot.data == null) {
-                        //print('snapshot is null');
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            CustomNoData(message: "No transactions found"),
-                          ],
-                        );
-                      } else if (snapshot.data.data.isEmpty) {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            CustomNoData(message: "No transactions found"),
-                          ],
-                        );
-                      } else {
-                        return Expanded(
-                          child: Container(
-                            margin: EdgeInsets.only(bottom: 40),
-                            child: ListView.builder(
-                              padding: EdgeInsets.zero,
-                              itemCount: snapshot.data.data.length,
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) => TransactionDetail(
-                                          data: snapshot.data.data[index],
-                                          account:
-                                              user.getAccountList[currentIndex],
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  child: TransactionCard(
-                                    data: snapshot.data.data[index],
-                                    type: index % 3,
-                                    visible: showTransaction,
+                  } else {
+                    var trans = MockData.transactions;
+
+                    return Expanded(
+                      child: Container(
+                        margin: EdgeInsets.only(bottom: 40),
+                        child: ListView.builder(
+                          padding: EdgeInsets.zero,
+                          itemCount: trans.length,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => TransactionDetail(
+                                      data: trans[index],
+                                      account: MockData.accounts[currentIndex],
+                                    ),
                                   ),
                                 );
                               },
-                            ),
-                          ),
-                        );
-                      }
-                    } else {
-                      return CustomError(retry: () {});
-                    }
+                              child: TransactionCard(
+                                data: trans[index],
+                                type: index % 3,
+                                visible: showTransaction,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    );
                   }
                 },
               ),
@@ -665,11 +623,7 @@ class AccountWidget extends StatefulWidget {
 class _AccountWidgetState extends State<AccountWidget> {
   bool show = false;
   String _amount() {
-    if (show) {
-      return Utilities.formatAmounts(widget.account.availableBalance);
-    } else {
-      return '**********';
-    }
+    return Utilities.formatAmounts(widget.account.availableBalance);
   }
 
   toggleTransaction() {
@@ -689,11 +643,12 @@ class _AccountWidgetState extends State<AccountWidget> {
         padding: const EdgeInsets.all(20),
         child: GestureDetector(
           onTap: (() => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: ((context) => Container()),
-                ),
-              )),
+              context,
+              MaterialPageRoute(
+                  builder: ((context) => TransHistory(
+                        data: widget.account,
+                        showBack: true,
+                      ))))),
           child: PhysicalModel(
             elevation: 10,
             borderRadius: BorderRadius.circular(8),
@@ -740,9 +695,15 @@ class _AccountWidgetState extends State<AccountWidget> {
                                 SizedBox(height: 5),
                                 Text(widget.account.accountDesc.toUpperCase()),
                                 SizedBox(height: 5),
-                                Text(Utilities.formatCardNo(
-                                  widget.account.accountNumber,
-                                )),
+                                Text(
+                                  Utilities.formatCardNo(
+                                    widget.account.accountNumber,
+                                  ),
+                                  style: GoogleFonts.lato(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ],
                             ),
                             PhysicalModel(
@@ -751,7 +712,7 @@ class _AccountWidgetState extends State<AccountWidget> {
                               shape: BoxShape.circle,
                               child: CircleAvatar(
                                 backgroundImage:
-                                    AssetImage('assets/images/slcb.png'),
+                                    AssetImage('assets/images/logo.png'),
                               ),
                             )
                           ],
@@ -764,31 +725,26 @@ class _AccountWidgetState extends State<AccountWidget> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Balance',
+                                  'Available Balance',
                                   style: GoogleFonts.comfortaa(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 10,
+                                    fontSize: 11,
                                   ),
                                 ),
-                                SizedBox(height: 2.0),
+                                SizedBox(height: 4.0),
                                 Text(
                                   '${widget.account.currency} ${_amount()}',
                                   style: GoogleFonts.comfortaa(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 22,
-                                    color: themeProvider.isLightTheme
-                                        ? Constants.mainColor
-                                        : Colors.tealAccent,
-                                  ),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 22,
+                                      color: Constants.mainColor),
                                 ),
                               ],
                             ),
                             IconButton(
                               onPressed: toggleTransaction,
                               icon: Icon(
-                                !show
-                                    ? CupertinoIcons.eye
-                                    : CupertinoIcons.eye_slash,
+                                FontAwesomeIcons.ccVisa,
                               ),
                             )
                           ],
