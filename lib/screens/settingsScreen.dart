@@ -148,38 +148,38 @@ class SettingsScreenState extends State<SettingsScreen> {
                             },
                           ),
 
-                          SettingTile(
-                            label: 'Dark Mode',
-                            color: themeProvider.isLightTheme
-                                ? Colors.grey[800]
-                                : Colors.grey[400],
-                            icon: themeProvider.isLightTheme
-                                ? Icons.dark_mode
-                                : Icons.light_mode_rounded,
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  !themeProvider.isLightTheme ? 'ON' : 'OFF',
-                                  style: TextStyle(
-                                    color: Colors.grey[300],
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                SizedBox(width: 5.0),
-                                CupertinoSwitch(
-                                  activeColor: Constants.mainColor,
-                                  value: !themeProvider.isLightTheme,
-                                  onChanged: (state) async {
-                                    await themeProvider.toggleThemeData();
-                                  },
-                                )
-                              ],
-                            ),
-                            func: () {},
-                          ),
+                          // SettingTile(
+                          //   label: 'Dark Mode',
+                          //   color: themeProvider.isLightTheme
+                          //       ? Colors.grey[800]
+                          //       : Colors.grey[400],
+                          //   icon: themeProvider.isLightTheme
+                          //       ? Icons.dark_mode
+                          //       : Icons.light_mode_rounded,
+                          //   trailing: Row(
+                          //     mainAxisSize: MainAxisSize.min,
+                          //     mainAxisAlignment: MainAxisAlignment.end,
+                          //     children: [
+                          //       Text(
+                          //         !themeProvider.isLightTheme ? 'ON' : 'OFF',
+                          //         style: TextStyle(
+                          //           color: Colors.grey[300],
+                          //           fontSize: 15.0,
+                          //           fontWeight: FontWeight.w600,
+                          //         ),
+                          //       ),
+                          //       SizedBox(width: 5.0),
+                          //       CupertinoSwitch(
+                          //         activeColor: Constants.mainColor,
+                          //         value: !themeProvider.isLightTheme,
+                          //         onChanged: (state) async {
+                          //           await themeProvider.toggleThemeData();
+                          //         },
+                          //       )
+                          //     ],
+                          //   ),
+                          //   func: () {},
+                          // ),
 
                           // SettingTile(
                           //   label: 'Enquiry',
