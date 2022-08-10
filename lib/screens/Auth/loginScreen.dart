@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:gfg_wallet/controllers/AuthController.dart';
 import 'package:gfg_wallet/provider/globals.dart';
 import 'package:gfg_wallet/screens/landing_page.dart';
@@ -595,8 +596,9 @@ class _LoginScreenState extends State<LoginScreen> {
           ? const Center(
               child: Padding(
                 padding: EdgeInsets.all(8.0),
-                child: CircularProgressIndicator(
-                  backgroundColor: Colors.white,
+                child: SpinKitCircle(
+                  color: Colors.white,
+                  size: 24,
                 ),
               ),
             )
