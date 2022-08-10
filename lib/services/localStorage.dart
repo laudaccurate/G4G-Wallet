@@ -59,7 +59,9 @@ class LocalStorageService {
   String get username => _getFromDisk(UsernameKey) ?? '';
   set username(String value) => _saveToDisk(UsernameKey, value);
 
-  String get user => _getFromDisk(User) ?? '';
+  String get user =>
+      _getFromDisk(User) ??
+      "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhbGlhcyI6IkBhYWRlZ29rLjAxIiwiZXhwaXJ5IjoiMjAyMi0wOC0wM1QxNzo0NzoxNi4zMTQwMzlaIiwiaXNzIjoiZ29uZG9yIGNvbW1lcmNlIiwib3JnIjoiYWNjZXNzIiwidG9rZW5fdHlwZSI6ImFjY2VzcyIsInVzZXJpZCI6IjAxRzZOUU0xWTFSUFc5OVlWRjFGMkJQTkZHIn0.R8P4ripUxpNAfotJcgkhhpyNEhwRKtt1-v_GLsEWY0c2U4uTtKCdDqhloSbFCj4CF-9yah05K1CxhrBST8nmu0wlQEBPahiimWRhpxKErrA30GsJI_RrDtYzwh6GdY97zxBpJXYr6AKZ_S8b0XmdB_feT0V4ZAeq5efs70AZZ7FWWLKNOgqo5NxJh7AWGuxrEzVc5Xx1A9Ou4YcqenBIoHTYkHyFQpuc_DSCLqcqQ0JJctQuNXO7_m1d2v8VNWhY2ZFWC6fnFRllHxcYbv0SADfs6FubQrnlOGd-oZQTGiJJUAB61sfIeArH1ZMibyCK5SQCqoYUBjK1PtFUh9zq-PzlMmTfnXirwDaejUfYEkCdFhqoVECH9zRtC3R_VyIsT13fZTtFLO-q4kjgdEXu4ScaIJvMCsgdQFw9VDMx2dCTKwnVRuwJn2f8NSmNXx66WmXSBSGuYQOOZVQN8yvwsX19dP_jyaKCecc-PGsARiyjJZzgM4YzBaaxLfY5jKZvWO7aEZ2zb_7kPPbzM2ZM67lxooOfHb2X-Jr1o8xKcmrvNXbjvrnPeQa5GoDoPl1UE0nGK-zD4UlLLc2GGKwZwFSw9mevSkNj99uhUYcOnvnoK7HBK3HyHyTMewqK2nCKJHgWed5tFAVG00wCyrGPnPMGLFZIikC4IsrsCAOoLx4";
   set user(String value) => _saveToDisk(User, value);
 
   String get backgroundImage =>
