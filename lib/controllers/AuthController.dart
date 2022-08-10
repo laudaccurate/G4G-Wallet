@@ -284,4 +284,61 @@ class AuthController {
       def.setLoading(false);
     }
   }
+
+  static payWithPin(
+    BuildContext context,
+    details,
+  ) async {
+    final def = Provider.of<Globals>(context, listen: false);
+
+    final user = Provider.of<UserProvider>(context, listen: false);
+    try {
+      LocalStorageService storageService = locator<LocalStorageService>();
+      bool checkinternet = await internetCheck();
+      def.setLoading(true);
+      if (checkinternet) {
+        var res = await AuthAPI.payWithPin(details);
+
+        user.setUser(res.data);
+
+        if (res.data.customerType == "I") {
+          // await AccountController.getAccounts(context: context);
+          // var expenses = await UtilitiesAPI.getExpenses();
+          // def.setExpenseTypes(expenses);
+
+          def.setProfilePic(storageService.profilePic);
+
+          if (res.data.firstTimeLogin) {
+            storageService.username = "";
+          } else if (res.data.changePassword) {
+            storageService.username = details["userId"];
+          } else if (res.data.setPin) {
+            storageService.username = details["userId"];
+          } else {
+            storageService.username = details["userId"];
+            storageService.isLoggedIn = true;
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => LandingPage()),
+              (route) => false,
+            );
+          }
+        } else {
+          showNetworkMessage(context,
+              "Corporate accounts are not allowed to use this platform");
+        }
+
+        // _user.setAccount(data.data);
+
+      } else {
+        showNetworkMessage(context, "Please check your internet");
+      }
+    } on PlatformException catch (e) {
+      showErrorMessage(context, e.message ?? "An Error Occured");
+    } on SocketException catch (_) {
+      showErrorMessage(context, "Error connecting to service");
+    } finally {
+      def.setLoading(false);
+    }
+  }
 }

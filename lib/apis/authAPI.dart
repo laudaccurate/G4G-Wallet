@@ -201,7 +201,53 @@ class AuthAPI {
   static Future<LoginModel> payFromWallet(Map<String, dynamic> details,
       {String bio}) async {
     //print("API called");
-    String url = "${Constants.url}/CreateMerchant";
+    String url = "${Constants.url}/PaymentFromWallet";
+
+    print(url);
+
+    details.forEach((key, value) => print("$key = $value"));
+    final response = await http.post(
+      Uri.parse(url),
+      headers: Constants.header,
+      body: jsonEncode(details),
+    );
+
+    print("======");
+    print(response.body);
+    print("======");
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> result = json.decode(response.body);
+
+      if (result["responseCode"] == "000") {
+        LoginModel responds = LoginModel.fromJson(json.decode(response.body));
+        log(response.body);
+        //print("____user");
+        //print(responds.data.accountsList[0].localEquivalentAvailableBalance);
+        //print(responds.data.accountsList[0].accountNumber);
+        return responds;
+      } else {
+        throw PlatformException(
+          code: result["responseCode"].toString(),
+          message: result["response_message"],
+        );
+      }
+      // return responds;
+    } else {
+      // return null;
+      //print(response.statusCode);
+      throw PlatformException(
+        code: response.statusCode.toString(),
+        message:
+            "${jsonDecode(response.body)['httpMessage']} - ${jsonDecode(response.body)['moreInformation']}",
+      );
+    }
+  }
+
+  static Future<LoginModel> payWithPin(Map<String, dynamic> details,
+      {String bio}) async {
+    //print("API called");
+    String url = "${Constants.url}/PayWithTransactionPin";
 
     print(url);
 
