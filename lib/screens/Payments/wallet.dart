@@ -186,11 +186,12 @@ class _WalletPaymentState extends State<WalletPayment> {
                       },
                       amount: amount,
                       onSubmit: () async {
+                        var token =
+                            jsonDecode(storageService.user)["token"] ?? "12345";
                         var res = await AuthController.payFromWallet(context, {
                           "channel_code": "APISNG",
                           "user_email": userEmail.text,
-                          "user_token":
-                              jsonDecode(storageService.user)["token"],
+                          "user_token": token,
                           "user_type": "USER",
                           "destination_wallet_alias": receiverName.text,
                           "amount": amount,

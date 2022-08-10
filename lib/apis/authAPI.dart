@@ -48,7 +48,8 @@ class AuthAPI {
       //print(response.statusCode);
       throw PlatformException(
         code: response.statusCode.toString(),
-        message: "Error connecting to server",
+        message:
+            "${jsonDecode(response.body)['httpMessage']} - ${jsonDecode(response.body)['moreInformation']}",
       );
     }
   }
@@ -101,7 +102,8 @@ class AuthAPI {
       //print(response.statusCode);
       throw PlatformException(
         code: response.statusCode.toString(),
-        message: "Error connecting to server",
+        message:
+            "${jsonDecode(response.body)['httpMessage']} - ${jsonDecode(response.body)['moreInformation']}",
       );
     }
   }
@@ -145,7 +147,8 @@ class AuthAPI {
       //print(response.statusCode);
       throw PlatformException(
         code: response.statusCode.toString(),
-        message: "Error connecting to server",
+        message:
+            "${jsonDecode(response.body)['httpMessage']} - ${jsonDecode(response.body)['moreInformation']}",
       );
     }
   }
@@ -189,7 +192,8 @@ class AuthAPI {
       //print(response.statusCode);
       throw PlatformException(
         code: response.statusCode.toString(),
-        message: "Error connecting to server",
+        message:
+            "${jsonDecode(response.body)['httpMessage']} - ${jsonDecode(response.body)['moreInformation']}",
       );
     }
   }
@@ -234,7 +238,8 @@ class AuthAPI {
       //print(response.statusCode);
       throw PlatformException(
         code: response.statusCode.toString(),
-        message: "Error connecting to server",
+        message:
+            "${jsonDecode(response.body)['httpMessage']} - ${jsonDecode(response.body)['moreInformation']}",
       );
     }
   }

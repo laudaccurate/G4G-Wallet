@@ -1,3 +1,5 @@
+// ignore_for_file: import_of_legacy_library_into_null_safe
+
 import 'package:gfg_wallet/models.dart/accountModels.dart';
 import 'package:gfg_wallet/models.dart/transHistoryModel.dart';
 import 'package:gfg_wallet/utils/util.dart';
@@ -49,9 +51,39 @@ class MockData {
     TransHistoryDatum(
       narration: "Hackathon Prize",
       transactionNumber: "45623012",
-      postingSysDate: DateTime.parse("19700101"),
+      postingSysDate: DateTime.parse("19708111"),
       postingSysTime: Utilities.dateFormat(DateTime.now()),
       amount: "5000",
+      channel: "MOB",
+      branch: "000",
+      batchNumber: "00123654",
+      valueDate: DateTime.parse("19700101"),
+      documentReference: "qwertyu",
+      runningBalance: "540890",
+      imageCheck: 0,
+      contraAccount: "09077890056",
+    ),
+    TransHistoryDatum(
+      narration: "School Fees",
+      transactionNumber: "45623012",
+      postingSysDate: DateTime.parse("19200125"),
+      postingSysTime: Utilities.dateFormat(DateTime.now()),
+      amount: "3200",
+      channel: "MOB",
+      branch: "000",
+      batchNumber: "00123654",
+      valueDate: DateTime.parse("20200101"),
+      documentReference: "qwertyu",
+      runningBalance: "12000",
+      imageCheck: 0,
+      contraAccount: "09077890056",
+    ),
+    TransHistoryDatum(
+      narration: "Groceries",
+      transactionNumber: "45623012",
+      postingSysDate: DateTime.parse("19700101"),
+      postingSysTime: Utilities.dateFormat(DateTime.now()),
+      amount: "800",
       channel: "MOB",
       branch: "000",
       batchNumber: "00123654",
