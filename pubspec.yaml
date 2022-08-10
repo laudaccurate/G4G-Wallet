@@ -48,8 +48,8 @@ dependencies:
   fluttercontactpicker: ^4.6.0
   flutter_svg: ^1.0.3
   url_launcher: ^6.0.18
-  # qr_flutter: ^4.0.0
-  # qr_code_scanner: ^0.5.2
+  qr_flutter: ^4.0.0
+  qr_code_scanner: ^0.5.2
   animations: ^2.0.2
   dotted_border: ^2.0.0+1
   expandable: ^5.0.1

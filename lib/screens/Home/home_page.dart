@@ -19,6 +19,7 @@ import 'package:gfg_wallet/utils/shimmerLoader.dart';
 import 'package:gfg_wallet/utils/util.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../models.dart/accountModels.dart';
 import '../../utils/themes.dart';
@@ -205,20 +206,20 @@ class _HomePageState extends State<HomePage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  // Center(
-                                  //   child: QrImage(
-                                  //     data: jsonEncode(data),
-                                  //     version: QrVersions.auto,
-                                  //     size: 280,
-                                  //     padding: EdgeInsets.all(20),
-                                  //     gapless: false,
-                                  //     embeddedImage:
-                                  //         AssetImage(Constants.logoImage),
-                                  //     embeddedImageStyle: QrEmbeddedImageStyle(
-                                  //       size: Size(60, 40),
-                                  //     ),
-                                  //   ),
-                                  // ),
+                                  Center(
+                                    child: QrImage(
+                                      data: jsonEncode(data),
+                                      version: QrVersions.auto,
+                                      size: 280,
+                                      padding: EdgeInsets.all(20),
+                                      gapless: false,
+                                      embeddedImage:
+                                          AssetImage(Constants.logoImage),
+                                      embeddedImageStyle: QrEmbeddedImageStyle(
+                                        size: Size(60, 40),
+                                      ),
+                                    ),
+                                  ),
                                   Text(
                                     debitAccNum,
                                     style: TextStyle(
