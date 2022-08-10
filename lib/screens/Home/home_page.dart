@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gfg_wallet/models.dart/transHistoryModel.dart';
 import 'package:gfg_wallet/provider/userProvider.dart';
+import 'package:gfg_wallet/screens/Payments/pin.dart';
 import 'package:gfg_wallet/screens/Payments/wallet.dart';
 import 'package:gfg_wallet/screens/settingsScreen.dart';
 import 'package:gfg_wallet/screens/transHistory.dart';
@@ -483,7 +484,7 @@ class _HomePageState extends State<HomePage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => Container(),
+              builder: (context) => PinPayment(),
             ),
           );
         },

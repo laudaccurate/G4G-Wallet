@@ -1,13 +1,9 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe, prefer_interpolation_to_compose_strings, use_build_context_synchronously
 
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:fluttercontactpicker/fluttercontactpicker.dart';
 import 'package:gfg_wallet/controllers/AuthController.dart';
 import 'package:gfg_wallet/models.dart/accountModels.dart';
-import 'package:gfg_wallet/provider/phoneDetails.dart';
-import 'package:gfg_wallet/provider/userProvider.dart';
 import 'package:gfg_wallet/services/contacts.dart';
 import 'package:gfg_wallet/services/localStorage.dart';
 import 'package:gfg_wallet/services/serviceLocator.dart';
@@ -19,7 +15,6 @@ import 'package:gfg_wallet/widgets/infoCard.dart';
 import 'package:gfg_wallet/widgets/inputFields.dart';
 import 'package:gfg_wallet/widgets/paymentLoader.dart';
 import 'package:gfg_wallet/widgets/success_page.dart';
-import 'package:provider/provider.dart';
 import '../../utils/util.dart';
 import '../../widgets/enter_pin_secAnswer.dart';
 
@@ -40,12 +35,11 @@ class _PinPaymentState extends State<PinPayment> {
   String amount = "";
   String name = "";
 
-  AccountModelDatum? debitAccount;
+  AccountModelDatum? debitAccount = MockData.accounts.first;
   @override
   Widget build(BuildContext context) {
     LocalStorageService storageService = locator<LocalStorageService>();
-    final user = Provider.of<UserProvider>(context);
-    final phoneInfo = Provider.of<PhoneInfo>(context, listen: false);
+
     return PaymentLoader(
       widget: Scaffold(
         appBar: customAppBar('Payment From Wallet', context),
@@ -65,7 +59,7 @@ class _PinPaymentState extends State<PinPayment> {
                   Expanded(
                     child: CustomTextInput(
                       label: 'Phone Number',
-                      controller: reference,
+                      controller: phoneNumber,
                       keyboard: TextInputType.number,
                       suffix: Icon(
                         Icons.contacts,
@@ -102,26 +96,26 @@ class _PinPaymentState extends State<PinPayment> {
                   )
                 ]),
                 Constants.spacer,
-                const Label('Recipient Alias'),
-                CustomTextInput(
-                  label: 'Recipient Alias',
-                  controller: invoiceId,
-                  suffix: Icon(
-                    Icons.person,
-                    size: 20.0,
-                    color: Colors.grey[500],
-                  ),
-                  onEdited: (val) {},
-                ),
-                Constants.spacer,
                 const Label('Amount'),
                 AmountFeild(
-                    currency: debitAccount?.currency,
+                    currency: "NGN",
                     onEdited: (val) {
                       setState(() {
                         amount = val.toString();
                       });
                     }),
+                Constants.spacer,
+                const Label('Invoice ID'),
+                CustomTextInput(
+                  label: 'Invoice ID',
+                  controller: invoiceId,
+                  suffix: Icon(
+                    Icons.receipt,
+                    size: 20.0,
+                    color: Colors.grey[500],
+                  ),
+                  onEdited: (val) {},
+                ),
                 Constants.spacer,
                 const Label('Reference'),
                 CustomTextInput(
@@ -156,7 +150,7 @@ class _PinPaymentState extends State<PinPayment> {
                       context: context,
                       pinController: pinController,
                       data: {
-                        'Transfer From': MockData.accounts.first.accountNumber,
+                        'Transfer From': debitAccount?.accountNumber,
                         'Phone Number': phoneNumber.text,
                         'Invoice ID': invoiceId.text,
                         'Reference': reference.text,
@@ -168,8 +162,9 @@ class _PinPaymentState extends State<PinPayment> {
                       },
                       amount: amount,
                       onSubmit: () async {
-                        var token =
-                            jsonDecode(storageService.user)["token"] ?? "12345";
+                        // var token = storageService.user != null
+                        //     ? jsonDecode(storageService.user)["token"]
+                        //     : MockData.token;
                         var res = await AuthController.payWithPin(context, {
                           "channel_code": "APISNG",
                           "phone_number": phoneNumber.text,
